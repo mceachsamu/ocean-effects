@@ -5,6 +5,7 @@
         _Phong ("phong", Range(0,1)) = 0.5
         _MainTex ("Base (RGB)", 2D) = "white" {}
         _NoiseTexture ("Noise map", 2D) = "white" {}
+        _NoiseTexture2 ("Noise map 2", 2D) = "white" {}
         _DispTex ("Disp Texture", 2D) = "gray" {}
         _NormalMap ("Normalmap", 2D) = "bump" {}
         _Displacement ("Displacement", Range(0.0005, 0.00001)) = 0.001
@@ -91,20 +92,21 @@
 
 
         uniform sampler2D _NoiseTexture;
+        uniform sampler2D _NoiseTexture2;
         uniform float _WaveFrequency;
         uniform float _WaveSpeed;
         uniform float _WaveHeight;
 
         float4 getDistortion(float4 position, float2 uv) {
             float time = _Time * _WaveSpeed;
-            float noise1 = tex2Dlod (_NoiseTexture, float4(float2(uv.x + time, uv.y) * _WaveFrequency , 0,0)).r;
+            float noise1 = tex2Dlod (_NoiseTexture2, float4(float2(uv.x - time, uv.y) * _WaveFrequency , 0,0)).r;
             float noise2 = tex2Dlod (_NoiseTexture, float4(float2(uv.x + time, uv.y + time) * _WaveFrequency * 0.1, 0, 0)).r;
-            float noise3 = tex2Dlod (_NoiseTexture, float4(float2(uv.x, uv.y - time) * _WaveFrequency * 2.0, 0, 0)).r;
+            float noise3 = tex2Dlod (_NoiseTexture2, float4(float2(uv.x, uv.y + time) * _WaveFrequency * 2.0, 0, 0)).r;
 
 
-            position.z += noise1 * _WaveHeight;            
+            position.z += noise1 * _WaveHeight * 2.0;            
             position.z += noise2 * _WaveHeight * 3;    
-            position.z += noise3 * _WaveHeight * 0.5;
+            position.z += noise3 * _WaveHeight * 1.0;
             // position.z -= -1.0 * abs(sin(position.x * _WaveFrequency*0.2 + _Time * _WaveSpeed)) * _WaveHeight;
             // position.z -= -1.0 * abs(sin(position.x * _WaveFrequency*0.8 + _Time * _WaveSpeed)) * _WaveHeight*0.4;
             // position.z -= -1.0 * (sin(position.x * _WaveFrequency*0.5 + _Time * _WaveSpeed*0.5)) * _WaveHeight*0.6;
@@ -189,8 +191,6 @@
             float backLighting = pow(saturate(dot(viewDir, (-1.0 * lightDir + s.Normal * _BackLightNormalStrength))), _BackLightPower) * _BackLightStrength * depth;
 
             float4 col = _AmbientColor + rim * _RimColor + specIntensity * _SpecularColor + NdotL * _Color + backLighting * _BacklightColor;
-
-            
 
             return col/1.0;
         }
