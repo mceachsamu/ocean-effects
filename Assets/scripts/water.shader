@@ -15,7 +15,8 @@
         _AmbientColor("Ambient Color", Color) = (0.0,0.0,0.0,0.0)
         _RimColor("Rim Color", Color) = (0.0,0.0,0.0,0.0)
         _RimAmount("rim amount", Range(0, 5)) = 1
-        _Glossiness("Glossiness", Range(0, 5)) = 1
+        _Glossiness("Glossiness", Range(0, 200)) = 1
+        _ShadingIntensity("shading intensity", Range(0, 3)) = 1
 
         _NormalMapStrength("normal map strength", Range(0.0,1.0)) = 1.0
         _NormalScrollSpeed("normal scroll speed", Range(0.0,1.0)) = 1.0
@@ -25,13 +26,14 @@
         _BackLightPower("backlighting power",  Range(0.0,10.0)) = 1.0
         _BackLightStrength("backlighting strength",  Range(0.0,10.0)) = 1.0
         _BacklightColor("backlight Color", Color) = (0.0,0.0,0.0,0.0)
-        _DepthMultiplier("depth multiplier",  Range(1.0,10.0)) = 1.0
+        _DepthMultiplier("depth multiplier",  Range(1.0,100.0)) = 1.0
 
         _WaveFrequency("wave frequency",  Range(0.0,20.0)) = 1.0
         _WaveSpeed("wave speed",  Range(0.0,10.0)) = 1
         _WaveHeight("wave height", Range(0.0,0.05)) = 0.01
 
-        _NormalSearch("normal search", Range(0.0,0.05)) = 0.01
+        _NormalSearch("normal search", Range(0.0,0.1)) = 0.01
+        _TextureSize("texture size", float) = 100.0
 
     }
     SubShader {
@@ -96,31 +98,26 @@
         uniform float _WaveFrequency;
         uniform float _WaveSpeed;
         uniform float _WaveHeight;
+        uniform float _NormalSearch;
+        uniform float _TextureSize;
 
-        float4 getDistortion(float4 position, float2 uv) {
+        float4 getDistortion(float4 position) {
             float time = _Time * _WaveSpeed;
-            float noise1 = tex2Dlod (_NoiseTexture2, float4(float2(uv.x - time, uv.y) * _WaveFrequency , 0,0)).r;
-            float noise2 = tex2Dlod (_NoiseTexture, float4(float2(uv.x + time, uv.y + time) * _WaveFrequency * 0.1, 0, 0)).r;
-            float noise3 = tex2Dlod (_NoiseTexture2, float4(float2(uv.x, uv.y + time) * _WaveFrequency * 2.0, 0, 0)).r;
 
+            position.z -= -1.0 * abs(sin(position.x * _WaveFrequency*20 + _Time * _WaveSpeed)) * _WaveHeight;
+            position.z -= -1.0 * abs(sin(position.x * _WaveFrequency*80 + _Time * _WaveSpeed)) * _WaveHeight*0.4;
+            position.z -= -1.0 * (sin(position.x * _WaveFrequency*60 + _Time * _WaveSpeed*0.5)) * _WaveHeight*0.6;
 
-            position.z += noise1 * _WaveHeight * 2.0;            
-            position.z += noise2 * _WaveHeight * 3;    
-            position.z += noise3 * _WaveHeight * 1.0;
-            // position.z -= -1.0 * abs(sin(position.x * _WaveFrequency*0.2 + _Time * _WaveSpeed)) * _WaveHeight;
-            // position.z -= -1.0 * abs(sin(position.x * _WaveFrequency*0.8 + _Time * _WaveSpeed)) * _WaveHeight*0.4;
-            // position.z -= -1.0 * (sin(position.x * _WaveFrequency*0.5 + _Time * _WaveSpeed*0.5)) * _WaveHeight*0.6;
-
-            // position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*0.5 + _Time * _WaveSpeed*0.99)) * _WaveHeight*0.6;
-            // position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*0.05 + _Time * _WaveSpeed*0.6)) * _WaveHeight*2.0;
+            position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*50 + _Time * _WaveSpeed*0.99)) * _WaveHeight*0.6;
+            position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*30 + _Time * _WaveSpeed*0.6)) * _WaveHeight*2.0;
             return position;
         }
 
-        float3 getDistortedNormal(float4 position, float3 normal, float step, float2 uv) {
-            float4 pos1 = getDistortion(position, uv) - getDistortion(float4(position.x + step, position.y + step, position.z, position.w), uv);
-            float4 pos2 = getDistortion(position, uv) - getDistortion(float4(position.x - step, position.y + step, position.z, position.w), uv);
-            float4 pos3 = getDistortion(position, uv) - getDistortion(float4(position.x + step, position.y - step, position.z, position.w), uv);
-            float4 pos4 = getDistortion(position, uv) - getDistortion(float4(position.x - step, position.y - step, position.z, position.w), uv);
+        float3 getDistortedNormal(float4 position, float3 normal, float step) {
+            float4 pos1 = getDistortion(position) - getDistortion(float4(position.x + step, position.y + step, position.z, position.w));
+            float4 pos2 = getDistortion(position) - getDistortion(float4(position.x - step, position.y + step, position.z, position.w));
+            float4 pos3 = getDistortion(position) - getDistortion(float4(position.x + step, position.y - step, position.z, position.w));
+            float4 pos4 = getDistortion(position) - getDistortion(float4(position.x - step, position.y - step, position.z, position.w));
 
             float3 norm1 = cross(pos1.xyz, pos2.xyz);
             float3 norm2 = cross(pos3.xyz, pos4.xyz);
@@ -128,11 +125,11 @@
             return (normalize(normal) + normalize(norm1) + normalize(norm2))/3.0;
         }
 
-        uniform float _NormalSearch;
         void disp (inout appdata v)
         {
-            v.vertex = getDistortion(v.vertex, v.texcoord);
-            v.normal = getDistortedNormal(v.vertex, v.normal, _NormalSearch, v.texcoord);
+            float4 distortion = getDistortion(v.vertex);
+            v.vertex.z += distortion.z;
+            v.normal = getDistortedNormal(v.vertex, v.normal, _NormalSearch);
         }
 
         struct Input {
@@ -164,6 +161,7 @@
         uniform fixed4 _RimColor;
         uniform float _RimAmount;
         uniform float _Glossiness;
+        uniform float _ShadingIntensity;
 
         uniform float _NormalMapStrength;
         uniform float _NormalScrollSpeed;
@@ -177,22 +175,25 @@
 
         inline half4 LightingWater (SurfaceOutputT s, half3 viewDir, UnityGI gi) {
             float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
-            float NdotL = saturate(dot(normalize(s.Normal) , lightDir));
+            float NdotL = pow(saturate(dot(normalize(s.Normal) , lightDir)), _ShadingIntensity);
 
             float3 H = normalize(lightDir + normalize(viewDir));
             float NdotH = dot(normalize(s.Normal), H);
-            float specIntensity = saturate(pow(NdotH, s.Gloss * s.Gloss));
+            float specIntensity = saturate(pow(NdotH, s.Gloss));
 
             float rimDot = clamp((1.0 - dot(normalize(viewDir), normalize(s.Normal))), -50.0, 50.0);
             float rim = pow(rimDot, _RimAmount);
 
-            float depth = s.Depth*_DepthMultiplier;
+            float depth = s.Depth * _DepthMultiplier;
 
-            float backLighting = pow(saturate(dot(viewDir, (-1.0 * lightDir + s.Normal * _BackLightNormalStrength))), _BackLightPower) * _BackLightStrength * depth;
+            float backLighting = pow(saturate(dot(viewDir, (-1.0 * lightDir - s.Normal * _BackLightNormalStrength))), _BackLightPower) * _BackLightStrength * depth;
 
-            float4 col = _AmbientColor + rim * _RimColor + specIntensity * _SpecularColor + NdotL * _Color + backLighting * _BacklightColor;
-
-            return col/1.0;
+            float4 col = _AmbientColor;
+            col += rim * _RimColor;
+            col += specIntensity * _SpecularColor;
+            col += NdotL * _Color;
+            col += backLighting * _BacklightColor;
+            return col;
         }
 
         inline void LightingWater_GI (SurfaceOutputT s, UnityGIInput data, inout UnityGI gi){
@@ -203,7 +204,7 @@
             // float refraction = getDistortion(IN.worldPos.y, IN.) * 1.0;
 
             float2 tex = float2(IN.screenPos.x, IN.screenPos.y) / IN.screenPos.w;
-            half4 c = tex2D (_MainTex, tex);
+            half4 c = tex2D (_NoiseTexture, IN.uv_MainTex);
             half4 depth = tex2D (_CameraDepthTexture, tex);
 
             o.Depth = depth;
@@ -213,7 +214,7 @@
 
             float3 nmNormal = UnpackNormal(tex2D(_NormalMap, IN.uv_MainTex * _TextureFrequency + _Time * _NormalScrollSpeed));
             WorldNormalVector (IN, o.Normal);
-            o.Normal += nmNormal * _NormalMapStrength;
+            // o.Normal += nmNormal * _NormalMapStrength;
             o.Position = IN.worldPos;
         }
         ENDCG
