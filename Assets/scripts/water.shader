@@ -28,7 +28,7 @@
         _BacklightColor("backlight Color", Color) = (0.0,0.0,0.0,0.0)
         _DepthMultiplier("depth multiplier",  Range(1.0,100.0)) = 1.0
 
-        _WaveFrequency("wave frequency",  Range(0.0,20.0)) = 1.0
+        _WaveFrequency("wave frequency",  Range(0.0,200.0)) = 1.0
         _WaveSpeed("wave speed",  Range(0.0,10.0)) = 1
         _WaveHeight("wave height", Range(0.0,0.05)) = 0.01
 
@@ -58,7 +58,7 @@
 
         float4 tessDistance (appdata v0, appdata v1, appdata v2) {
             float minDist = 15.0;
-            float maxDist = 170.0;
+            float maxDist = 400.0;
             return UnityDistanceBasedTess(v0.vertex, v1.vertex, v2.vertex, minDist, maxDist, _Tess);
         }
 
@@ -104,12 +104,17 @@
         float4 getDistortion(float4 position) {
             float time = _Time * _WaveSpeed;
 
-            position.z -= -1.0 * abs(sin(position.x * _WaveFrequency*20 + _Time * _WaveSpeed)) * _WaveHeight;
-            position.z -= -1.0 * abs(sin(position.x * _WaveFrequency*80 + _Time * _WaveSpeed)) * _WaveHeight*0.4;
-            position.z -= -1.0 * (sin(position.x * _WaveFrequency*60 + _Time * _WaveSpeed*0.5)) * _WaveHeight*0.6;
-
+            position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*20 + _Time * _WaveSpeed)) * _WaveHeight;
+            position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*80 + _Time * _WaveSpeed)) * _WaveHeight*0.4;
+            position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*60 + _Time * _WaveSpeed*0.5)) * _WaveHeight*0.6;
             position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*50 + _Time * _WaveSpeed*0.99)) * _WaveHeight*0.6;
             position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*30 + _Time * _WaveSpeed*0.6)) * _WaveHeight*2.0;
+            
+            position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*200 + _Time * _WaveSpeed)) * _WaveHeight * 0.08;
+            position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*400 + _Time * _WaveSpeed)) * _WaveHeight*0.1;
+            position.z -= 1.0 * (sin((position.y + position.x) * _WaveFrequency*600 + _Time * _WaveSpeed*0.5)) * _WaveHeight*0.08;
+            position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*500 + _Time * _WaveSpeed*0.99)) * _WaveHeight*0.076;
+            position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*300 + _Time * _WaveSpeed*0.6)) * _WaveHeight*0.09;
             return position;
         }
 
