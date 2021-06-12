@@ -60,7 +60,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 35df08eb491074d869d62af1e641a325, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -76,38 +76,38 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BackLightNormalStrength: 0.689
+    - _BackLightNormalStrength: 1
     - _BackLightPower: 1.22
-    - _BackLightStrength: 1.51
+    - _BackLightStrength: 5.97
     - _BumpScale: 1
     - _Cutoff: 0.5
-    - _DepthMultiplier: 62.2
+    - _DepthMultiplier: 25.1
     - _DetailNormalMapScale: 1
     - _Displacement: 0.001
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 9
+    - _Glossiness: 30
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
     - _NormalMapStrength: 0.187
-    - _NormalScrollSpeed: 0.271
-    - _NormalSearch: 0.0123
+    - _NormalScrollSpeed: 0.193
+    - _NormalSearch: 0.018
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Phong: 0.591
-    - _RimAmount: 2.28
-    - _ShadingIntensity: 1.37
+    - _Phong: 0.427
+    - _RimAmount: 3.24
+    - _ShadingIntensity: 1.32
     - _SmoothnessTextureChannel: 0
     - _SpecIntensity: 1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Tess: 11.8
+    - _Tess: 11.4
     - _TextureFrequency: 5.3
     - _TextureSize: 512
     - _UVSec: 0
     - _WaveFrequency: 49
-    - _WaveHeight: 0.0114
+    - _WaveHeight: 0.0068
     - _WaveSpeed: 10
     - _ZWrite: 1
     m_Colors:
@@ -116,7 +116,7 @@ Material:
     - _Color: {r: 0, g: 0.6436324, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0, g: 0.43022662, b: 0.5283019, a: 0}
-    - _SpecColor: {r: 0, g: 0.833992, b: 1, a: 0.5}
-    - _SpecularColor: {r: 0.3679245, g: 0.3679245, b: 0.3679245, a: 0.5}
+    - _SpecColor: {r: 0, g: 0.97242785, b: 1, a: 0.5}
+    - _SpecularColor: {r: 0, g: 0.3773585, b: 0.3773585, a: 0.5}
     - _WaveHeight: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -110,11 +110,11 @@
             position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*50 + _Time * _WaveSpeed*0.99)) * _WaveHeight*0.6;
             position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*30 + _Time * _WaveSpeed*0.6)) * _WaveHeight*2.0;
             
-            position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*200 + _Time * _WaveSpeed)) * _WaveHeight * 0.08;
-            position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*400 + _Time * _WaveSpeed)) * _WaveHeight*0.1;
-            position.z -= 1.0 * (sin((position.y + position.x) * _WaveFrequency*600 + _Time * _WaveSpeed*0.5)) * _WaveHeight*0.08;
-            position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*500 + _Time * _WaveSpeed*0.99)) * _WaveHeight*0.076;
-            position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*300 + _Time * _WaveSpeed*0.6)) * _WaveHeight*0.09;
+            position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*200 + _Time * _WaveSpeed)) * _WaveHeight * 0.2;
+            position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*400 + _Time * _WaveSpeed)) * _WaveHeight*0.2;
+            position.z -= 1.0 * (sin((position.y + position.x) * _WaveFrequency*600 + _Time * _WaveSpeed*0.5)) * _WaveHeight*0.38;
+            position.z -= 1.0 * (sin(position.y * _WaveFrequency*150 + _Time * _WaveSpeed*0.99)) * _WaveHeight*0.26;
+            position.z -= 1.0 * (sin(position.y * _WaveFrequency*300 + _Time * _WaveSpeed*0.6)) * _WaveHeight*0.29;
             return position;
         }
 
@@ -183,7 +183,8 @@
             float NdotL = pow(saturate(dot(normalize(s.Normal) , lightDir)), _ShadingIntensity);
 
             float3 H = normalize(lightDir + normalize(viewDir));
-            float NdotH = dot(normalize(s.Normal), H);
+            float P = dot(normalize(viewDir), normalize(s.Normal));
+            float NdotH = dot(s.Normal, H);
             float specIntensity = saturate(pow(NdotH, s.Gloss));
 
             float rimDot = clamp((1.0 - dot(normalize(viewDir), normalize(s.Normal))), -50.0, 50.0);
