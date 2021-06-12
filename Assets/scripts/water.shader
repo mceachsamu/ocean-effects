@@ -18,7 +18,7 @@
         _Glossiness("Glossiness", Range(0, 200)) = 1
         _ShadingIntensity("shading intensity", Range(0, 3)) = 1
 
-        _NormalMapStrength("normal map strength", Range(0.0,1.0)) = 1.0
+        _NormalMapStrength("normal map strength", Range(0.0,10.0)) = 1.0
         _NormalScrollSpeed("normal scroll speed", Range(0.0,1.0)) = 1.0
         _TextureFrequency("texture frequency", Range(0.0,20.0)) = 1.0
 
@@ -57,8 +57,8 @@
         float _Phong;
 
         float4 tessDistance (appdata v0, appdata v1, appdata v2) {
-            float minDist = 15.0;
-            float maxDist = 400.0;
+            float minDist = 150.0;
+            float maxDist = 300.0;
             return UnityDistanceBasedTess(v0.vertex, v1.vertex, v2.vertex, minDist, maxDist, _Tess);
         }
 
@@ -108,7 +108,7 @@
             position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*80 + _Time * _WaveSpeed)) * _WaveHeight*0.4;
             position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*60 + _Time * _WaveSpeed*0.5)) * _WaveHeight*0.6;
             position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*50 + _Time * _WaveSpeed*0.99)) * _WaveHeight*0.6;
-            position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*30 + _Time * _WaveSpeed*0.6)) * _WaveHeight*2.0;
+            position.z -= 1.0 * (sin(position.y * _WaveFrequency*10 + _Time * _WaveSpeed*0.6)) * _WaveHeight*5.0;
             
             position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*200 + _Time * _WaveSpeed)) * _WaveHeight * 0.2;
             position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*400 + _Time * _WaveSpeed)) * _WaveHeight*0.2;
@@ -149,6 +149,7 @@
             fixed4 Albedo;  // diffuse color
             fixed4 Depth;  // diffuse color
             fixed3 Normal;  // world normal, if written
+            fixed3 NormalM; //normal map normal
             fixed3 Position;  // world position, if written
             fixed3 Emission;
             fixed3 Ambience;
@@ -184,8 +185,8 @@
 
             float3 H = normalize(lightDir + normalize(viewDir));
             float P = dot(normalize(viewDir), normalize(s.Normal));
-            float NdotH = dot(s.Normal, H);
-            float specIntensity = saturate(pow(NdotH, s.Gloss));
+            float NdotH = dot((s.NormalM + s.Normal) / 2.0, H);
+            float specIntensity = 1.0 - saturate(pow(NdotH, s.Gloss));
 
             float rimDot = clamp((1.0 - dot(normalize(viewDir), normalize(s.Normal))), -50.0, 50.0);
             float rim = pow(rimDot, _RimAmount);
@@ -218,9 +219,12 @@
             o.Gloss = _Glossiness;
             o.Ambience = float3(_AmbientColor.r, _AmbientColor.g, _AmbientColor.b);
 
-            float3 nmNormal = UnpackNormal(tex2D(_NormalMap, IN.uv_MainTex * _TextureFrequency + _Time * _NormalScrollSpeed));
+            float4 norm1 = tex2D(_NormalMap, IN.uv_MainTex * _TextureFrequency + _Time * _NormalScrollSpeed);
+            float4 norm2 = tex2D(_NormalMap, IN.uv_MainTex * _TextureFrequency - _Time * _NormalScrollSpeed);
+            float4 norm3 = norm1 + norm2;
+            float3 nmNormal = UnpackNormal(norm3);
             WorldNormalVector (IN, o.Normal);
-            // o.Normal += nmNormal * _NormalMapStrength;
+            o.NormalM = nmNormal * _NormalMapStrength;
             o.Position = IN.worldPos;
         }
         ENDCG

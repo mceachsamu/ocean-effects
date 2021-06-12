@@ -77,34 +77,34 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BackLightNormalStrength: 1
-    - _BackLightPower: 1.22
-    - _BackLightStrength: 5.97
+    - _BackLightPower: 2.29
+    - _BackLightStrength: 5.99
     - _BumpScale: 1
     - _Cutoff: 0.5
-    - _DepthMultiplier: 25.1
+    - _DepthMultiplier: 18.8
     - _DetailNormalMapScale: 1
     - _Displacement: 0.001
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 30
+    - _Glossiness: 85
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
-    - _NormalMapStrength: 0.187
-    - _NormalScrollSpeed: 0.193
+    - _NormalMapStrength: 2.22
+    - _NormalScrollSpeed: 0.063
     - _NormalSearch: 0.018
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Phong: 0.427
-    - _RimAmount: 3.24
-    - _ShadingIntensity: 1.32
+    - _RimAmount: 0.65
+    - _ShadingIntensity: 2.34
     - _SmoothnessTextureChannel: 0
     - _SpecIntensity: 1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Tess: 11.4
-    - _TextureFrequency: 5.3
-    - _TextureSize: 512
+    - _Tess: 12.5
+    - _TextureFrequency: 20
+    - _TextureSize: 100
     - _UVSec: 0
     - _WaveFrequency: 49
     - _WaveHeight: 0.0068
@@ -112,11 +112,11 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _AmbientColor: {r: 0, g: 0, b: 0, a: 0}
-    - _BacklightColor: {r: 0, g: 0.25081718, b: 0.26415092, a: 0}
-    - _Color: {r: 0, g: 0.6436324, b: 1, a: 1}
+    - _BacklightColor: {r: 0, g: 0.958333, b: 1, a: 0}
+    - _Color: {r: 0, g: 1, b: 0.9700117, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _RimColor: {r: 0, g: 0.43022662, b: 0.5283019, a: 0}
-    - _SpecColor: {r: 0, g: 0.97242785, b: 1, a: 0.5}
-    - _SpecularColor: {r: 0, g: 0.3773585, b: 0.3773585, a: 0.5}
+    - _RimColor: {r: 0, g: 0.5056602, b: 0.6320754, a: 0}
+    - _SpecColor: {r: 0, g: 0.97254896, b: 1, a: 0.5}
+    - _SpecularColor: {r: 0, g: 0.066037714, b: 0.066037714, a: 0.5}
     - _WaveHeight: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
