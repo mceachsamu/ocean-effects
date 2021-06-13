@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class camera : MonoBehaviour
+public class camera2 : MonoBehaviour
 {
+    public Shader shader;
+
     // Start is called before the first frame update
     void Start()
     {
-        // this.GetComponent<Camera>().depthTextureMode = DepthTextureMode.Depth;
+        GetComponent<Camera>().SetReplacementShader (shader, "RenderType");
     }
 
     // Update is called once per frame

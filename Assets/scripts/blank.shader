@@ -1,9 +1,8 @@
-﻿Shader "Custom/water"
+﻿Shader "Unlit/blank"
 {
     Properties {
         _Tess ("Tessellation", Range(1,32)) = 4
         _Phong ("phong", Range(0,1)) = 0.5
-        _MaxDistanceTess("mex tes distance", Range(0, 1000)) = 100
         _MainTex ("Base (RGB)", 2D) = "white" {}
         _NoiseTexture ("Noise map", 2D) = "white" {}
         _NoiseTexture2 ("Noise map 2", 2D) = "white" {}
@@ -28,8 +27,6 @@
         _BackLightStrength("backlighting strength",  Range(0.0,10.0)) = 1.0
         _BacklightColor("backlight Color", Color) = (0.0,0.0,0.0,0.0)
         _DepthMultiplier("depth multiplier",  Range(1.0,100.0)) = 1.0
-        _FakeDensityMult("density multiplier", Range(1.0,100.0)) = 10.0
-        _FrontLightingStrength("front lighting strength", Range(0.0, 1.0)) = 0.5
 
         _WaveFrequency("wave frequency",  Range(0.0,2000.0)) = 1.0
         _WaveSpeed("wave speed",  Range(0.0,10.0)) = 1
@@ -58,11 +55,10 @@
 
         float _Tess;
         float _Phong;
-        uniform float _MaxDistanceTess;
 
         float4 tessDistance (appdata v0, appdata v1, appdata v2) {
-            float minDist = 15.0;
-            float maxDist = _MaxDistanceTess;
+            float minDist = 150.0;
+            float maxDist = 300.0;
             return UnityDistanceBasedTess(v0.vertex, v1.vertex, v2.vertex, minDist, maxDist, _Tess);
         }
 
@@ -112,7 +108,7 @@
             position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*80 + _Time * _WaveSpeed)) * _WaveHeight*0.4;
             position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*15 + _Time * _WaveSpeed*0.5)) * _WaveHeight*1.1;
             position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*20 + _Time * _WaveSpeed*0.99)) * _WaveHeight*1.6;
-            position.z -= 1.0 * (sin(position.y * _WaveFrequency*10 + _Time * _WaveSpeed*0.6)) * _WaveHeight*2.0;
+            position.z -= 1.0 * (sin(position.y * _WaveFrequency*15 + _Time * _WaveSpeed*0.6)) * _WaveHeight*1.0;
             
             position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*200 + _Time * _WaveSpeed)) * _WaveHeight * 0.12;
             position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*400 + _Time * _WaveSpeed)) * _WaveHeight*0.14;
@@ -127,11 +123,11 @@
             float4 pos2 = getDistortion(position) - getDistortion(float4(position.x - step, position.y + step, position.z, position.w));
             float4 pos3 = getDistortion(position) - getDistortion(float4(position.x + step, position.y - step, position.z, position.w));
             float4 pos4 = getDistortion(position) - getDistortion(float4(position.x - step, position.y - step, position.z, position.w));
-
+            
             float3 norm1 = cross(pos1.xyz, pos2.xyz);
             float3 norm2 = cross(pos4.xyz, pos3.xyz);
 
-            return norm2 ;//(normalize(normal) + normalize(norm1) + normalize(norm2))/3.0;
+            return norm2;
         }
 
         void disp (inout appdata v)
@@ -182,12 +178,10 @@
         uniform float _BackLightStrength;
         uniform fixed4 _BacklightColor;
         uniform float _DepthMultiplier;
-        uniform float _FakeDensityMult;
-        uniform float _FrontLightingStrength;
 
         inline half4 LightingWater (SurfaceOutputT s, half3 viewDir, UnityGI gi) {
             float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
-            float NdotL = pow(saturate(dot(normalize(s.Normal) , lightDir)), _ShadingIntensity);
+            float NdotL = pow(saturate(dot((s.Normal) , lightDir)), _ShadingIntensity);
 
             float3 H = normalize(lightDir + normalize(viewDir));
             float P = dot(normalize(viewDir), normalize(s.Normal));
@@ -199,22 +193,17 @@
 
             float depth = s.Depth * _DepthMultiplier;
 
-            float backLighting = pow(saturate(dot(normalize(viewDir), (-1.0 * lightDir - s.Normal * _BackLightNormalStrength))), _BackLightPower) * _BackLightStrength * depth;
-            float frontLighting = pow(saturate(dot(normalize(viewDir), (1.0 * lightDir - s.Normal * _BackLightNormalStrength))), _BackLightPower) * _BackLightStrength * depth;
-
-            float fakeDensity = 1.0 - (saturate(dot(float3(0.0, 0.0, 1.0), s.Normal)) + saturate(dot(float3(1.0, 0.0, 0.0), s.Normal))) * _FakeDensityMult;
-            // float fakeDensity = 1.0 - saturate((dot(float3(0.0, 1.0, 0.0), s.Normal))) * _FakeDensityMult;
-            backLighting *= fakeDensity;
-            frontLighting *= fakeDensity;
+            float backLighting = pow(saturate(dot(viewDir, (-1.0 * lightDir - s.Normal * _BackLightNormalStrength))), _BackLightPower) * _BackLightStrength * depth;
 
             float4 col = _AmbientColor;
             col += rim * _RimColor;
             col += specIntensity * _SpecularColor;
             col += NdotL * _Color;
             col += backLighting * _BacklightColor;
-            col += frontLighting * _BacklightColor * _FrontLightingStrength;
-            // col += fakeDensity;
-            return col;
+
+
+            
+            return NdotL * 2.0;//col;
         }
 
         inline void LightingWater_GI (SurfaceOutputT s, UnityGIInput data, inout UnityGI gi){
