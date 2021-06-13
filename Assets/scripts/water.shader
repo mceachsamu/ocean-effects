@@ -20,7 +20,7 @@
 
         _NormalMapStrength("normal map strength", Range(0.0,10.0)) = 1.0
         _NormalScrollSpeed("normal scroll speed", Range(0.0,1.0)) = 1.0
-        _TextureFrequency("texture frequency", Range(0.0,20.0)) = 1.0
+        _TextureFrequency("texture frequency", Range(0.0,40.0)) = 1.0
 
         _BackLightNormalStrength("backlighting normal strength",  Range(0.0,1.0)) = 0.5
         _BackLightPower("backlighting power",  Range(0.0,10.0)) = 1.0
@@ -28,7 +28,7 @@
         _BacklightColor("backlight Color", Color) = (0.0,0.0,0.0,0.0)
         _DepthMultiplier("depth multiplier",  Range(1.0,100.0)) = 1.0
 
-        _WaveFrequency("wave frequency",  Range(0.0,200.0)) = 1.0
+        _WaveFrequency("wave frequency",  Range(0.0,2000.0)) = 1.0
         _WaveSpeed("wave speed",  Range(0.0,10.0)) = 1
         _WaveHeight("wave height", Range(0.0,0.05)) = 0.01
 
@@ -106,15 +106,15 @@
 
             position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*20 + _Time * _WaveSpeed)) * _WaveHeight;
             position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*80 + _Time * _WaveSpeed)) * _WaveHeight*0.4;
-            position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*60 + _Time * _WaveSpeed*0.5)) * _WaveHeight*0.6;
-            position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*50 + _Time * _WaveSpeed*0.99)) * _WaveHeight*0.6;
-            position.z -= 1.0 * (sin(position.y * _WaveFrequency*10 + _Time * _WaveSpeed*0.6)) * _WaveHeight*5.0;
+            position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*15 + _Time * _WaveSpeed*0.5)) * _WaveHeight*1.1;
+            position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*20 + _Time * _WaveSpeed*0.99)) * _WaveHeight*1.6;
+            position.z -= 1.0 * (sin(position.y * _WaveFrequency*15 + _Time * _WaveSpeed*0.6)) * _WaveHeight*1.0;
             
-            position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*200 + _Time * _WaveSpeed)) * _WaveHeight * 0.2;
-            position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*400 + _Time * _WaveSpeed)) * _WaveHeight*0.2;
-            position.z -= 1.0 * (sin((position.y + position.x) * _WaveFrequency*600 + _Time * _WaveSpeed*0.5)) * _WaveHeight*0.38;
-            position.z -= 1.0 * (sin(position.y * _WaveFrequency*150 + _Time * _WaveSpeed*0.99)) * _WaveHeight*0.26;
-            position.z -= 1.0 * (sin(position.y * _WaveFrequency*300 + _Time * _WaveSpeed*0.6)) * _WaveHeight*0.29;
+            position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*200 + _Time * _WaveSpeed)) * _WaveHeight * 0.12;
+            position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*400 + _Time * _WaveSpeed)) * _WaveHeight*0.14;
+            position.z -= 1.0 * (sin((position.y + position.x) * _WaveFrequency*600 + _Time * _WaveSpeed*0.5)) * _WaveHeight*0.13;
+            position.z -= 1.0 * (sin(position.y * _WaveFrequency*150 + _Time * _WaveSpeed*0.99)) * _WaveHeight*0.12;
+            position.z -= 1.0 * (sin(position.y * _WaveFrequency*300 + _Time * _WaveSpeed*0.6)) * _WaveHeight*0.11;
             return position;
         }
 

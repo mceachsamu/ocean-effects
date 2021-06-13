@@ -78,7 +78,7 @@ Material:
     m_Floats:
     - _BackLightNormalStrength: 1
     - _BackLightPower: 2.29
-    - _BackLightStrength: 5.99
+    - _BackLightStrength: 0.8
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DepthMultiplier: 18.8
@@ -96,8 +96,8 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Phong: 0.427
-    - _RimAmount: 0.65
-    - _ShadingIntensity: 2.34
+    - _RimAmount: 5
+    - _ShadingIntensity: 1.98
     - _SmoothnessTextureChannel: 0
     - _SpecIntensity: 1
     - _SpecularHighlights: 1
