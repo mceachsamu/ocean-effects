@@ -108,8 +108,8 @@
         float4 getDistortion(float4 position) {
             float time = _Time * _WaveSpeed;
 
-            position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*20 + _Time * _WaveSpeed)) * _WaveHeight;
-            position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*80 + _Time * _WaveSpeed)) * _WaveHeight*0.4;
+            position.z -= 1.0 * (sin(position.x * _WaveFrequency*10 + _Time * _WaveSpeed)) * _WaveHeight*2.0;
+            position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*20 + _Time * _WaveSpeed)) * _WaveHeight*1.6;
             position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*15 + _Time * _WaveSpeed*0.5)) * _WaveHeight*1.1;
             position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*20 + _Time * _WaveSpeed*0.99)) * _WaveHeight*1.6;
             position.z -= 1.0 * (sin(position.y * _WaveFrequency*10 + _Time * _WaveSpeed*0.6)) * _WaveHeight*2.0;
