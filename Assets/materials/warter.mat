@@ -95,7 +95,7 @@ Material:
     - _Mode: 0
     - _NormalMapStrength: 10
     - _NormalScrollSpeed: 0.031
-    - _NormalSearch: 0.008
+    - _NormalSearch: 0.002
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Phong: 0.26
@@ -109,8 +109,8 @@ Material:
     - _TextureFrequency: 40
     - _TextureSize: 100
     - _UVSec: 0
-    - _WaveFrequency: 22
-    - _WaveHeight: 0.0038
+    - _WaveFrequency: 44
+    - _WaveHeight: 0.0049
     - _WaveSpeed: 10
     - _ZWrite: 1
     m_Colors:
