@@ -3,7 +3,7 @@
     Properties {
         _Tess ("Tessellation", Range(1,32)) = 4
         _Phong ("phong", Range(0,1)) = 0.5
-        _MaxDistanceTess("mex tes distance", Range(0, 1000)) = 100
+        _MaxDistanceTess("mex tes distance", Range(0, 2000)) = 100
         _MainTex ("Base (RGB)", 2D) = "white" {}
         _NoiseTexture ("Noise map", 2D) = "white" {}
         _NoiseTexture2 ("Noise map 2", 2D) = "white" {}
@@ -17,9 +17,9 @@
         _RimColor("Rim Color", Color) = (0.0,0.0,0.0,0.0)
         _RimAmount("rim amount", Range(0, 5)) = 1
         _Glossiness("Glossiness", Range(0, 200)) = 1
-        _ShadingIntensity("shading intensity", Range(0, 3)) = 1
+        _ShadingIntensity("shading intensity", Range(0.0, 30.0)) = 1.0
 
-        _NormalMapStrength("normal map strength", Range(0.0,10.0)) = 1.0
+        _NormalMapStrength("normal map strength", Range(0.0,30.0)) = 1.0
         _NormalScrollSpeed("normal scroll speed", Range(0.0,1.0)) = 1.0
         _TextureFrequency("texture frequency", Range(0.0,40.0)) = 1.0
 
@@ -27,8 +27,8 @@
         _BackLightPower("backlighting power",  Range(0.0,10.0)) = 1.0
         _BackLightStrength("backlighting strength",  Range(0.0,10.0)) = 1.0
         _BacklightColor("backlight Color", Color) = (0.0,0.0,0.0,0.0)
-        _DepthMultiplier("depth multiplier",  Range(1.0,100.0)) = 1.0
-        _FakeDensityMult("density multiplier", Range(1.0,100.0)) = 10.0
+        _DepthMultiplier("depth multiplier",  Range(0.0,5.0)) = 1.0
+        _FakeDensityMult("density multiplier", Range(0.0,5.0)) = 1.0
         _FrontLightingStrength("front lighting strength", Range(0.0, 1.0)) = 0.5
 
         _WaveFrequency("wave frequency",  Range(0.0,2000.0)) = 1.0
@@ -96,7 +96,6 @@
             return ((norm1 + norm2 + norm3 + norm4) / 4.0);
         }
 
-
         uniform sampler2D _NoiseTexture;
         uniform sampler2D _NoiseTexture2;
         uniform float _WaveFrequency;
@@ -108,17 +107,17 @@
         float4 getDistortion(float4 position) {
             float time = _Time * _WaveSpeed;
 
-            position.z -= 1.0 * (sin(position.x * _WaveFrequency*10 + _Time * _WaveSpeed)) * _WaveHeight*2.0;
+            // position.z -= 1.0 * (sin(position.x * _WaveFrequency*10 + _Time * _WaveSpeed)) * _WaveHeight*2.0;
             position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*20 + _Time * _WaveSpeed)) * _WaveHeight*1.6;
-            position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*15 + _Time * _WaveSpeed*0.5)) * _WaveHeight*1.1;
-            position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*20 + _Time * _WaveSpeed*0.99)) * _WaveHeight*1.6;
-            position.z -= 1.0 * (sin(position.y * _WaveFrequency*10 + _Time * _WaveSpeed*0.6)) * _WaveHeight*2.0;
+            position.z -= 1.0 * (sin(position.x * _WaveFrequency*15 + _Time * _WaveSpeed*0.5)) * _WaveHeight*1.1;
+            position.z -= 1.0 * (sin(position.y * _WaveFrequency*20 + _Time * _WaveSpeed*0.99)) * _WaveHeight*1.6;
+            position.z -= 1.0 *abs (sin(position.y * _WaveFrequency*10 + _Time * _WaveSpeed*0.6)) * _WaveHeight*2.0;
             
-            position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*200 + _Time * _WaveSpeed)) * _WaveHeight * 0.12;
-            position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*400 + _Time * _WaveSpeed)) * _WaveHeight*0.14;
-            position.z -= 1.0 * (sin((position.y + position.x) * _WaveFrequency*600 + _Time * _WaveSpeed*0.5)) * _WaveHeight*0.13;
-            position.z -= 13.0 * (sin(position.y * _WaveFrequency*150 + _Time * _WaveSpeed*0.99)) * _WaveHeight*0.12;
-            position.z -= 1.0 * (sin(position.y * _WaveFrequency*300 + _Time * _WaveSpeed*0.6)) * _WaveHeight*0.11;
+            position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*120 + _Time * _WaveSpeed)) * _WaveHeight * 0.32;
+            position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*100 + _Time * _WaveSpeed)) * _WaveHeight*0.24;
+            position.z -= 1.0 * (sin((position.y + position.x) * _WaveFrequency*70 + _Time * _WaveSpeed*0.5)) * _WaveHeight*0.53;
+            position.z -= 1.0 * (sin(position.y * _WaveFrequency*150 + _Time * _WaveSpeed*0.99)) * _WaveHeight*0.22;
+            position.z -= 1.0 * (sin(position.y * _WaveFrequency*70 + _Time * _WaveSpeed*0.6)) * _WaveHeight*0.31;
             return position;
         }
 
@@ -131,7 +130,7 @@
             float3 norm1 = cross(pos1.xyz, pos2.xyz);
             float3 norm2 = cross(pos4.xyz, pos3.xyz);
 
-            return norm2 ;//(normalize(normal) + normalize(norm1) + normalize(norm2))/3.0;
+            return normalize(norm2);//(normalize(normal) + normalize(norm1) + normalize(norm2))/3.0;
         }
 
         void disp (inout appdata v)
@@ -186,6 +185,9 @@
         uniform float _FrontLightingStrength;
 
         inline half4 LightingWater (SurfaceOutputT s, half3 viewDir, UnityGI gi) {
+
+            float3 normC = s.Normal + s.NormalM;
+
             float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
             float NdotL = pow(saturate(dot(normalize(s.Normal) , lightDir)), _ShadingIntensity);
 
@@ -199,20 +201,22 @@
 
             float depth = s.Depth * _DepthMultiplier;
 
-            float backLighting = pow(saturate(dot(normalize(viewDir), (-1.0 * lightDir - s.Normal * _BackLightNormalStrength))), _BackLightPower) * _BackLightStrength * depth;
+            float backLighting = pow(saturate(dot(normalize(viewDir), (-1.0 * lightDir - s.Normal * _BackLightNormalStrength))), _BackLightPower) * _BackLightStrength;
             float frontLighting = pow(saturate(dot(normalize(viewDir), (1.0 * lightDir - s.Normal * _BackLightNormalStrength))), _BackLightPower) * _BackLightStrength * depth;
 
-            float fakeDensity = 1.0 - (saturate(dot(float3(0.0, 0.0, 1.0), s.Normal)) + saturate(dot(float3(1.0, 0.0, 0.0), s.Normal))) * _FakeDensityMult;
+            // float fakeDensity = saturate((dot(float3(0.0, 0.0, 1.0), s.Normal)) + (dot(float3(1.0, 0.0, 0.0), s.Normal))) * _FakeDensityMult;
             // float fakeDensity = 1.0 - saturate((dot(float3(0.0, 1.0, 0.0), s.Normal))) * _FakeDensityMult;
+            float fakeDensity = saturate((0.0 + (normalize(s.Normal).z))) * _FakeDensityMult;
+            float fakeDensity2 = saturate((1.0 - (normalize(s.Normal).z))) * _DepthMultiplier;
             backLighting *= fakeDensity;
-            frontLighting *= fakeDensity;
+            // frontLighting *= fakeDensity;
 
             float4 col = _AmbientColor;
             col += rim * _RimColor;
             col += specIntensity * _SpecularColor;
-            col += NdotL * _Color;
+            col += NdotL * _Color * fakeDensity2;
             col += backLighting * _BacklightColor;
-            col += frontLighting * _BacklightColor * _FrontLightingStrength;
+            // col += frontLighting * _BacklightColor * _FrontLightingStrength;
             // col += fakeDensity;
             return col;
         }
