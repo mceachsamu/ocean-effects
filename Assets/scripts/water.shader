@@ -236,7 +236,6 @@
             col += NdotL * _Color * fakeDensity2;
             col += backLighting * _BacklightColor;
             col += frontLighting * _BacklightColor * _FrontLightingStrength;
-            // col += spec2;
             return col;
         }
 
