@@ -16,10 +16,12 @@
         _AmbientColor("Ambient Color", Color) = (0.0,0.0,0.0,0.0)
         _RimColor("Rim Color", Color) = (0.0,0.0,0.0,0.0)
         _RimAmount("rim amount", Range(0, 5)) = 1
-        _Glossiness("Glossiness", Range(0, 200)) = 1
+        _Glossiness("Glossiness", Range(0, 50)) = 1
         _ShadingIntensity("shading intensity", Range(0.0, 30.0)) = 1.0
 
         _NormalMapStrength("normal map strength", Range(0.0,30.0)) = 1.0
+        _NormalMapStrength2("normal map strength 2", Range(0.0,1.0)) = 1.0
+        _NormalMapDisplacement("normal map displacement", Range(0.0,1.0)) = 1.0
         _NormalScrollSpeed("normal scroll speed", Range(0.0,1.0)) = 1.0
         _TextureFrequency("texture frequency", Range(0.0,40.0)) = 1.0
 
@@ -103,21 +105,26 @@
         uniform float _WaveHeight;
         uniform float _NormalSearch;
         uniform float _TextureSize;
+        uniform float _NormalMapDisplacement;
+        uniform float _TextureFrequency;
+        uniform float _NormalScrollSpeed;
 
         float4 getDistortion(float4 position) {
             float time = _Time * _WaveSpeed;
 
             // position.z -= 1.0 * (sin(position.x * _WaveFrequency*10 + _Time * _WaveSpeed)) * _WaveHeight*2.0;
-            position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*20 + _Time * _WaveSpeed)) * _WaveHeight*1.6;
-            position.z -= 1.0 * (sin(position.x * _WaveFrequency*15 + _Time * _WaveSpeed*0.5)) * _WaveHeight*1.1;
-            position.z -= 1.0 * (sin(position.y * _WaveFrequency*20 + _Time * _WaveSpeed*0.99)) * _WaveHeight*1.6;
-            position.z -= 1.0 *abs (sin(position.y * _WaveFrequency*10 + _Time * _WaveSpeed*0.6)) * _WaveHeight*2.0;
+            // position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*20 + _Time * _WaveSpeed)) * _WaveHeight*1.6;
+            // position.z -= 1.0 * (sin(position.y + position.x * _WaveFrequency*8) + _Time * _WaveSpeed*0.5) * _WaveHeight*1.1;
+            // position.z -= 1.0 * (sin(position.y * _WaveFrequency*20 + _Time * _WaveSpeed*0.99)) * _WaveHeight*1.6;
+            position.z -= 1.0 *abs (sin(position.y * _WaveFrequency*10 + _Time * _WaveSpeed*0.6)) * _WaveHeight*20.0;
             
-            position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*120 + _Time * _WaveSpeed)) * _WaveHeight * 0.32;
-            position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*100 + _Time * _WaveSpeed)) * _WaveHeight*0.24;
-            position.z -= 1.0 * (sin((position.y + position.x) * _WaveFrequency*70 + _Time * _WaveSpeed*0.5)) * _WaveHeight*0.53;
-            position.z -= 1.0 * (sin(position.y * _WaveFrequency*150 + _Time * _WaveSpeed*0.99)) * _WaveHeight*0.22;
-            position.z -= 1.0 * (sin(position.y * _WaveFrequency*70 + _Time * _WaveSpeed*0.6)) * _WaveHeight*0.31;
+            position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*320 + _Time * _WaveSpeed * 2.0)) * _WaveHeight * 0.32;
+            position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*400 + _Time * _WaveSpeed * 1.5)) * _WaveHeight*0.24;
+            position.z -= 1.0 * (sin((position.y + position.x) * _WaveFrequency*70 + _Time * _WaveSpeed*3.5)) * _WaveHeight*1.53;
+            position.z -= 1.0 * (sin(position.y * _WaveFrequency*650 + _Time * _WaveSpeed*2.0)) * _WaveHeight*0.22;
+            position.z -= 1.0 * (sin((position.y + position.x) * _WaveFrequency*300 + _Time * _WaveSpeed*3.0)) * _WaveHeight*0.31;
+
+            position.z += _WaveHeight;
             return position;
         }
 
@@ -133,8 +140,17 @@
             return normalize(norm2);//(normalize(normal) + normalize(norm1) + normalize(norm2))/3.0;
         }
 
+        float2 GetNormUVPositive(float2 uv) {
+            return uv * _TextureFrequency + _Time * _NormalScrollSpeed;
+        }
+        
+        float2 GetNormUVNegative(float2 uv) {
+            return uv * _TextureFrequency - _Time * _NormalScrollSpeed;
+        }
+
         void disp (inout appdata v)
         {
+            float4 col = tex2Dlod (_NoiseTexture, float4(v.texcoord.xy,0,0));//tex2D(_NoiseTexture, v.texcoord);
             float4 distortion = getDistortion(v.vertex);
             v.vertex.z += distortion.z;
             v.normal = getDistortedNormal(v.vertex, v.normal, _NormalSearch);
@@ -173,9 +189,8 @@
         uniform float _ShadingIntensity;
 
         uniform float _NormalMapStrength;
-        uniform float _NormalScrollSpeed;
-        uniform float _TextureFrequency;
-        
+        uniform float _NormalMapStrength2;
+
         uniform float _BackLightNormalStrength;
         uniform float _BackLightPower;
         uniform float _BackLightStrength;
@@ -186,15 +201,19 @@
 
         inline half4 LightingWater (SurfaceOutputT s, half3 viewDir, UnityGI gi) {
 
-            float3 normC = s.Normal + s.NormalM;
+            float3 normC = normalize(normalize(s.Normal) + s.NormalM);
 
             float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
-            float NdotL = pow(saturate(dot(normalize(s.Normal) , lightDir)), _ShadingIntensity);
+            float NdotL = pow(saturate(dot(normalize(normC) , lightDir)), _ShadingIntensity);
 
             float3 H = normalize(lightDir + normalize(viewDir));
             float P = dot(normalize(viewDir), normalize(s.Normal));
-            float NdotH = dot((s.NormalM + s.Normal) / 2.0, H);
+            float NdotH = dot(normC, H);
             float specIntensity = 1.0 - saturate(pow(NdotH, s.Gloss));
+
+            float3 R = 2.0 * (normC) * dot((normC), normalize(lightDir)) - normalize(lightDir);
+            float spec2 = _SpecColor * pow(max(0, dot(R, normalize(viewDir))), _Glossiness);
+            specIntensity = spec2;
 
             float rimDot = clamp((1.0 - dot(normalize(viewDir), normalize(s.Normal))), -50.0, 50.0);
             float rim = pow(rimDot, _RimAmount);
@@ -216,8 +235,8 @@
             col += specIntensity * _SpecularColor;
             col += NdotL * _Color * fakeDensity2;
             col += backLighting * _BacklightColor;
-            // col += frontLighting * _BacklightColor * _FrontLightingStrength;
-            // col += fakeDensity;
+            col += frontLighting * _BacklightColor * _FrontLightingStrength;
+            // col += spec2;
             return col;
         }
 
@@ -237,12 +256,12 @@
             o.Gloss = _Glossiness;
             o.Ambience = float3(_AmbientColor.r, _AmbientColor.g, _AmbientColor.b);
 
-            float4 norm1 = tex2D(_NormalMap, IN.uv_MainTex * _TextureFrequency + _Time * _NormalScrollSpeed);
-            float4 norm2 = tex2D(_NormalMap, IN.uv_MainTex * _TextureFrequency - _Time * _NormalScrollSpeed);
-            float4 norm3 = norm1 + norm2;
-            float3 nmNormal = UnpackNormal(norm3);
+            float4 norm1 = tex2D(_NormalMap, GetNormUVPositive(IN.uv_MainTex));
+            float4 norm2 = tex2D(_NormalMap, GetNormUVNegative(IN.uv_MainTex));
+            float4 norm3 = (norm1 + norm2) * _NormalMapStrength2;
+            float3 nmNormal = UnpackNormal(norm3) * _NormalMapStrength;
             WorldNormalVector (IN, o.Normal);
-            o.NormalM = nmNormal * _NormalMapStrength;
+            o.NormalM = nmNormal;
             o.Position = IN.worldPos;
         }
         ENDCG
