@@ -33,8 +33,8 @@
         _FakeDensityMult("density multiplier", Range(0.0,5.0)) = 1.0
         _FrontLightingStrength("front lighting strength", Range(0.0, 1.0)) = 0.5
 
-        _WaveFrequency("wave frequency",  Range(0.0,2000.0)) = 1.0
-        _WaveSpeed("wave speed",  Range(0.0,10.0)) = 1
+        _WaveFrequency("wave frequency",  Range(0.0, 1.0)) = 1.0
+        _WaveSpeed("wave speed",  Range(0.0,100.0)) = 1
         _WaveHeight("wave height", Range(0.0,0.05)) = 0.01
 
         _NormalSearch("normal search", Range(0.0,0.1)) = 0.01
@@ -110,21 +110,26 @@
         uniform float _NormalScrollSpeed;
 
         float4 getDistortion(float4 position) {
+            float4 wPosition = mul (unity_ObjectToWorld, position);
             float time = _Time * _WaveSpeed;
 
-            // position.z -= 1.0 * (sin(position.x * _WaveFrequency*10 + _Time * _WaveSpeed)) * _WaveHeight*2.0;
-            // position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*20 + _Time * _WaveSpeed)) * _WaveHeight*1.6;
-            // position.z -= 1.0 * (sin(position.y + position.x * _WaveFrequency*8) + _Time * _WaveSpeed*0.5) * _WaveHeight*1.1;
-            // position.z -= 1.0 * (sin(position.y * _WaveFrequency*20 + _Time * _WaveSpeed*0.99)) * _WaveHeight*1.6;
-            position.z -= 1.0 *abs (sin(position.y * _WaveFrequency*10 + _Time * _WaveSpeed*0.6)) * _WaveHeight*20.0;
-            
-            position.z -= 1.0 * abs(sin(position.x * _WaveFrequency*320 + _Time * _WaveSpeed * 2.0)) * _WaveHeight * 0.32;
-            position.z -= 1.0 * abs(sin(position.y * _WaveFrequency*400 + _Time * _WaveSpeed * 1.5)) * _WaveHeight*0.24;
-            position.z -= 1.0 * (sin((position.y + position.x) * _WaveFrequency*70 + _Time * _WaveSpeed*3.5)) * _WaveHeight*1.53;
-            position.z -= 1.0 * (sin(position.y * _WaveFrequency*650 + _Time * _WaveSpeed*2.0)) * _WaveHeight*0.22;
-            position.z -= 1.0 * (sin((position.y + position.x) * _WaveFrequency*300 + _Time * _WaveSpeed*3.0)) * _WaveHeight*0.31;
 
-            position.z += _WaveHeight;
+            float z = 0.0;
+            // z -= 1.0 * (sin(wPosition.x * _WaveFrequency*10 + _Time * _WaveSpeed)) * _WaveHeight*2.0;
+            // z -= 1.0 * abs(sin(wPosition.x * _WaveFrequency*20 + _Time * _WaveSpeed)) * _WaveHeight*1.6;
+            z -= 1.0 * (sin((wPosition.z + wPosition.x) * _WaveFrequency/20.0 + _Time * _WaveSpeed*0.5)) * _WaveHeight*100.1;
+            z -= 1.0 * (sin(wPosition.x * _WaveFrequency/600.0 + _Time * _WaveSpeed*0.99)) * _WaveHeight*1600;
+            z -= 1.0 * (sin(wPosition.z * _WaveFrequency/100.0 + _Time * _WaveSpeed*0.6)) * _WaveHeight*2000.0;
+            
+            // wPosition.z -= 1.0 * abs(sin(wPosition.x * _WaveFrequency*1000 + _Time * _WaveSpeed * 2.0)) * _WaveHeight * 0.32;
+            z -= 1.0 * abs(sin(wPosition.z * _WaveFrequency/30.0 - _Time * _WaveSpeed * 5.5)) * _WaveHeight*150.0;
+            // z -= 1.0 * (sin((wPosition.y + wPosition.x) * _WaveFrequency*70 + _Time * _WaveSpeed*3.5)) * _WaveHeight*1.53;
+            // z -= 1.0 * (sin((wPosition.y + wPosition.x/4.0) * _WaveFrequency*650 + _Time * _WaveSpeed*5.0)) * _WaveHeight*0.22;
+            // z -= 1.0 * (sin((wPosition.y + wPosition.x) * _WaveFrequency*300 + _Time * _WaveSpeed*3.0)) * _WaveHeight*0.31;
+
+            z += _WaveHeight;
+            wPosition.y += z;
+            position = mul(unity_WorldToObject, wPosition);
             return position;
         }
 
@@ -236,6 +241,7 @@
             col += NdotL * _Color * fakeDensity2;
             col += backLighting * _BacklightColor;
             col += frontLighting * _BacklightColor * _FrontLightingStrength;
+            // col += spec2;
             return col;
         }
 
