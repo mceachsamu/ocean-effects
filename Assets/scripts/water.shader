@@ -33,12 +33,15 @@
         _FakeDensityMult("density multiplier", Range(0.0,5.0)) = 1.0
         _FrontLightingStrength("front lighting strength", Range(0.0, 1.0)) = 0.5
 
-        _WaveFrequency("wave frequency",  Range(0.0, 1.0)) = 1.0
+        _WaveFrequency("wave frequency",  Range(0.0, 10.0)) = 1.0
         _WaveSpeed("wave speed",  Range(0.0,100.0)) = 1
         _WaveHeight("wave height", Range(0.0,0.05)) = 0.01
 
         _NormalSearch("normal search", Range(0.0,0.1)) = 0.01
         _TextureSize("texture size", float) = 100.0
+
+        _MaxHeight("max height", Range(-10.0, 10.0)) = 0.0
+        _FoamAmount("foam amount", Range(0.0, 1.0)) = 0.0
 
     }
     SubShader {
@@ -119,13 +122,15 @@
             // z -= 1.0 * abs(sin(wPosition.x * _WaveFrequency*20 + _Time * _WaveSpeed)) * _WaveHeight*1.6;
             z -= 1.0 * (sin((wPosition.z + wPosition.x) * _WaveFrequency/20.0 + _Time * _WaveSpeed*0.5)) * _WaveHeight*100.1;
             z -= 1.0 * (sin(wPosition.x * _WaveFrequency/600.0 + _Time * _WaveSpeed*0.99)) * _WaveHeight*1600;
-            z -= 1.0 * (sin(wPosition.z * _WaveFrequency/100.0 + _Time * _WaveSpeed*0.6)) * _WaveHeight*2000.0;
+            z -= 1.0 * (sin((wPosition.z/3.0 - wPosition.x/4.0) * _WaveFrequency/100.0 + _Time * _WaveSpeed*0.6)) * _WaveHeight*2000.0;
+            z -= 1.0 * (sin(wPosition.z * _WaveFrequency/200.0 + _Time * _WaveSpeed*0.6)) * _WaveHeight*2000.0;
+            z -= 1.0 * (sin((wPosition.z/6.0 - wPosition.x/2.0) * _WaveFrequency/1000.0 + _Time * _WaveSpeed*0.6)) * _WaveHeight*1000.0;
+            z -= 1.0 * (sin((wPosition.z/6.0 - wPosition.x/2.0) * _WaveFrequency/1000.0 - _Time * _WaveSpeed*0.9)) * _WaveHeight*700.0;
             
-            // wPosition.z -= 1.0 * abs(sin(wPosition.x * _WaveFrequency*1000 + _Time * _WaveSpeed * 2.0)) * _WaveHeight * 0.32;
+            z -= 1.0 * abs(sin((wPosition.z + wPosition.x/2.0) * _WaveFrequency/50.0 - _Time * _WaveSpeed * 5.5)) * _WaveHeight*200.0;
+            z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x/4.0) * _WaveFrequency/10.0 - _Time * _WaveSpeed * 5.5)) * _WaveHeight*10.0;
             z -= 1.0 * abs(sin(wPosition.z * _WaveFrequency/30.0 - _Time * _WaveSpeed * 5.5)) * _WaveHeight*150.0;
-            // z -= 1.0 * (sin((wPosition.y + wPosition.x) * _WaveFrequency*70 + _Time * _WaveSpeed*3.5)) * _WaveHeight*1.53;
-            // z -= 1.0 * (sin((wPosition.y + wPosition.x/4.0) * _WaveFrequency*650 + _Time * _WaveSpeed*5.0)) * _WaveHeight*0.22;
-            // z -= 1.0 * (sin((wPosition.y + wPosition.x) * _WaveFrequency*300 + _Time * _WaveSpeed*3.0)) * _WaveHeight*0.31;
+            
 
             z += _WaveHeight;
             wPosition.y += z;
@@ -204,6 +209,9 @@
         uniform float _FakeDensityMult;
         uniform float _FrontLightingStrength;
 
+        uniform float _MaxHeight;
+        uniform float _FoamAmount;
+
         inline half4 LightingWater (SurfaceOutputT s, half3 viewDir, UnityGI gi) {
 
             float3 normC = normalize(normalize(s.Normal) + s.NormalM);
@@ -242,6 +250,7 @@
             col += backLighting * _BacklightColor;
             col += frontLighting * _BacklightColor * _FrontLightingStrength;
             // col += spec2;
+
             return col;
         }
 
@@ -253,7 +262,7 @@
             // float refraction = getDistortion(IN.worldPos.y, IN.) * 1.0;
 
             float2 tex = float2(IN.screenPos.x, IN.screenPos.y) / IN.screenPos.w;
-            half4 c = tex2D (_NoiseTexture, IN.uv_MainTex);
+            half4 c = tex2D (_NoiseTexture, IN.uv_MainTex * 10.0);
             half4 depth = tex2D (_CameraDepthTexture, tex);
 
             o.Depth = depth;

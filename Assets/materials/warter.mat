@@ -78,7 +78,7 @@ Material:
     m_Floats:
     - _BackLightNormalStrength: 0
     - _BackLightPower: 4.07
-    - _BackLightStrength: 8.5
+    - _BackLightStrength: 6.4
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DepthMultiplier: 2.34
@@ -86,33 +86,35 @@ Material:
     - _Displacement: 0.001
     - _DstBlend: 0
     - _FakeDensityMult: 0.96
+    - _FoamAmount: 0.494
     - _FrontLightingStrength: 0.06
     - _GlossMapScale: 1
-    - _Glossiness: 41.9
+    - _Glossiness: 4.1
     - _GlossyReflections: 1
     - _MaxDistanceTess: 2000
+    - _MaxHeight: -10
     - _Metallic: 0
     - _Mode: 0
     - _NormalMapDisplacement: 0.07
-    - _NormalMapStrength: 0.6
+    - _NormalMapStrength: 0.1
     - _NormalMapStrength2: 0.24
     - _NormalScrollSpeed: 0.476
     - _NormalSearch: 0.001
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Phong: 0.41
-    - _RimAmount: 2.12
-    - _ShadingIntensity: 8
+    - _RimAmount: 2.07
+    - _ShadingIntensity: 7.2
     - _SmoothnessTextureChannel: 0
     - _SpecIntensity: 1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Tess: 11.8
+    - _Tess: 12
     - _TextureFrequency: 40
     - _TextureSize: 100
     - _UVSec: 0
-    - _WaveFrequency: 0.6
-    - _WaveHeight: 0.0277
+    - _WaveFrequency: 1
+    - _WaveHeight: 0.0307
     - _WaveSpeed: 11
     - _ZWrite: 1
     m_Colors:
