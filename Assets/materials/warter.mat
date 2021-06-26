@@ -76,50 +76,50 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BackLightNormalStrength: 0.027
-    - _BackLightPower: 3.6
-    - _BackLightStrength: 0.08
+    - _BackLightNormalStrength: 0.707
+    - _BackLightPower: 2.27
+    - _BackLightStrength: 0.01
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DepthMultiplier: 1.14
     - _DetailNormalMapScale: 1
     - _Displacement: 0.001
     - _DstBlend: 0
-    - _FakeDensityMult: 4.13
+    - _FakeDensityMult: 3.27
     - _FrontLightingStrength: 0.17
     - _GlossMapScale: 1
-    - _Glossiness: 8.7
+    - _Glossiness: 18
     - _GlossyReflections: 1
     - _MaxDistanceTess: 0
     - _Metallic: 0
     - _Mode: 0
     - _NormalMapDisplacement: 0.003
-    - _NormalMapStrength: 0.67
-    - _NormalMapStrength2: 0.8
+    - _NormalMapStrength: 1
+    - _NormalMapStrength2: 1.28
     - _NormalScrollSpeed: 0.476
     - _NormalSearch: 0.001
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Phong: 0.41
-    - _RimAmount: 1.77
-    - _ShadingIntensity: 2.4
-    - _ShadingStrength: 28.8
+    - _RimAmount: 1.4
+    - _ShadingIntensity: 7.6
+    - _ShadingStrength: 24.1
     - _SmoothnessTextureChannel: 0
     - _SpecIntensity: 1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Tess: 5.4
+    - _Tess: 9.5
     - _TextureFrequency: 4.3
     - _TextureSize: 100
     - _UVSec: 0
-    - _WaveFrequency: 0.367
-    - _WaveHeight: 5.76
+    - _WaveFrequency: 1
+    - _WaveHeight: 4.01
     - _WaveSpeed: 0.8
     - _ZWrite: 1
     m_Colors:
     - _AmbientColor: {r: 0, g: 0, b: 0, a: 0}
     - _BacklightColor: {r: 0, g: 1, b: 0.8687782, a: 0}
-    - _Color: {r: 0, g: 0.85490227, b: 1, a: 1}
+    - _Color: {r: 0.010590963, g: 0.27575064, b: 0.3207547, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0.01601993, g: 0.3773585, b: 0.3634609, a: 0}
     - _SpecColor: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 0.5}
