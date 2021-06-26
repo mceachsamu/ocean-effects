@@ -76,51 +76,52 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BackLightNormalStrength: 0
-    - _BackLightPower: 4.07
-    - _BackLightStrength: 6.4
+    - _BackLightNormalStrength: 0.121
+    - _BackLightPower: 0.88
+    - _BackLightStrength: 4.67
     - _BumpScale: 1
     - _Cutoff: 0.5
-    - _DepthMultiplier: 2.34
+    - _DepthMultiplier: 5
     - _DetailNormalMapScale: 1
     - _Displacement: 0.001
     - _DstBlend: 0
-    - _FakeDensityMult: 0.96
+    - _FakeDensityMult: 1.07
     - _FoamAmount: 0.494
     - _FrontLightingStrength: 0.06
     - _GlossMapScale: 1
-    - _Glossiness: 4.1
+    - _Glossiness: 29
     - _GlossyReflections: 1
-    - _MaxDistanceTess: 2000
+    - _LightingOverall: 1
+    - _MaxDistanceTess: 10
     - _MaxHeight: -10
     - _Metallic: 0
     - _Mode: 0
-    - _NormalMapDisplacement: 0.07
-    - _NormalMapStrength: 0.1
-    - _NormalMapStrength2: 0.24
-    - _NormalScrollSpeed: 0.476
-    - _NormalSearch: 0.001
+    - _NormalMapDisplacement: 0.194
+    - _NormalMapStrength: 0.05
+    - _NormalMapStrength2: 0.213
+    - _NormalScrollSpeed: 0.068
+    - _NormalSearch: 0.0005
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Phong: 0.41
-    - _RimAmount: 2.07
-    - _ShadingIntensity: 7.2
+    - _Phong: 0.367
+    - _RimAmount: 1.87
+    - _ShadingIntensity: 30
     - _SmoothnessTextureChannel: 0
     - _SpecIntensity: 1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Tess: 12
+    - _Tess: 15.7
     - _TextureFrequency: 40
     - _TextureSize: 100
     - _UVSec: 0
-    - _WaveFrequency: 1
-    - _WaveHeight: 0.0307
-    - _WaveSpeed: 11
+    - _WaveFrequency: 400
+    - _WaveHeight: 0.00005
+    - _WaveSpeed: 24.7
     - _ZWrite: 1
     m_Colors:
     - _AmbientColor: {r: 0, g: 0, b: 0, a: 0}
-    - _BacklightColor: {r: 0.0020469967, g: 0.4339623, b: 0.37891427, a: 0}
-    - _Color: {r: 0, g: 0.85490227, b: 1, a: 1}
+    - _BacklightColor: {r: 0.0039215665, g: 0.43529412, b: 0.37771213, a: 0}
+    - _Color: {r: 0, g: 0.17656997, b: 0.1792453, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0.0031594948, g: 0.6698113, b: 0.6368087, a: 0}
     - _SpecColor: {r: 0.9716981, g: 0.93961376, b: 0.93961376, a: 0.5}

@@ -33,7 +33,7 @@
         _FakeDensityMult("density multiplier", Range(0.0,5.0)) = 1.0
         _FrontLightingStrength("front lighting strength", Range(0.0, 1.0)) = 0.5
 
-        _WaveFrequency("wave frequency",  Range(0.0, 10.0)) = 1.0
+        _WaveFrequency("wave frequency",  Range(0.0, 10000.0)) = 1.0
         _WaveSpeed("wave speed",  Range(0.0,100.0)) = 1
         _WaveHeight("wave height", Range(0.0,0.05)) = 0.01
 
@@ -41,7 +41,7 @@
         _TextureSize("texture size", float) = 100.0
 
         _MaxHeight("max height", Range(-10.0, 10.0)) = 0.0
-        _FoamAmount("foam amount", Range(0.0, 1.0)) = 0.0
+        _LightingOverall("foam amount", Range(0.0, 1.0)) = 0.0
 
     }
     SubShader {
@@ -66,7 +66,7 @@
         uniform float _MaxDistanceTess;
 
         float4 tessDistance (appdata v0, appdata v1, appdata v2) {
-            float minDist = 15.0;
+            float minDist = 0.0;
             float maxDist = _MaxDistanceTess;
             return UnityDistanceBasedTess(v0.vertex, v1.vertex, v2.vertex, minDist, maxDist, _Tess);
         }
@@ -120,16 +120,18 @@
             float z = 0.0;
             // z -= 1.0 * (sin(wPosition.x * _WaveFrequency*10 + _Time * _WaveSpeed)) * _WaveHeight*2.0;
             // z -= 1.0 * abs(sin(wPosition.x * _WaveFrequency*20 + _Time * _WaveSpeed)) * _WaveHeight*1.6;
-            z -= 1.0 * (sin((wPosition.z + wPosition.x) * _WaveFrequency/20.0 + _Time * _WaveSpeed*0.5)) * _WaveHeight*100.1;
             z -= 1.0 * (sin(wPosition.x * _WaveFrequency/600.0 + _Time * _WaveSpeed*0.99)) * _WaveHeight*1600;
             z -= 1.0 * (sin((wPosition.z/3.0 - wPosition.x/4.0) * _WaveFrequency/100.0 + _Time * _WaveSpeed*0.6)) * _WaveHeight*2000.0;
             z -= 1.0 * (sin(wPosition.z * _WaveFrequency/200.0 + _Time * _WaveSpeed*0.6)) * _WaveHeight*2000.0;
             z -= 1.0 * (sin((wPosition.z/6.0 - wPosition.x/2.0) * _WaveFrequency/1000.0 + _Time * _WaveSpeed*0.6)) * _WaveHeight*1000.0;
-            z -= 1.0 * (sin((wPosition.z/6.0 - wPosition.x/2.0) * _WaveFrequency/1000.0 - _Time * _WaveSpeed*0.9)) * _WaveHeight*700.0;
+            z -= 1.0 * (sin((wPosition.z/6.0 - wPosition.x/2.0) * _WaveFrequency/1000.0 - _Time * _WaveSpeed*0.9)) * _WaveHeight*1000.0;
             
-            z -= 1.0 * abs(sin((wPosition.z + wPosition.x/2.0) * _WaveFrequency/50.0 - _Time * _WaveSpeed * 5.5)) * _WaveHeight*200.0;
-            z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x/4.0) * _WaveFrequency/10.0 - _Time * _WaveSpeed * 5.5)) * _WaveHeight*10.0;
-            z -= 1.0 * abs(sin(wPosition.z * _WaveFrequency/30.0 - _Time * _WaveSpeed * 5.5)) * _WaveHeight*150.0;
+            z -= 1.0 * (sin((wPosition.z + wPosition.x) * _WaveFrequency/20.0 + _Time * _WaveSpeed*0.5)) * _WaveHeight*100.1;
+            z -= 1.0 * abs(sin((wPosition.z + wPosition.x/2.0) * _WaveFrequency/50.0 - _Time * _WaveSpeed * 2.5)) * _WaveHeight*100.0;
+            z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x/4.0) * _WaveFrequency/10.0 - _Time * _WaveSpeed * 4.5)) * _WaveHeight*79.0;
+            z -= 1.0 * abs(sin(wPosition.z * _WaveFrequency/30.0 - _Time * _WaveSpeed * 3.5)) * _WaveHeight*50.0;
+            z -= 1.0 * abs(sin(wPosition.z * _WaveFrequency/15.0 - _Time * _WaveSpeed * 3.5)) * _WaveHeight*78.0;
+            // z -= 1.0 * abs(sin(wPosition.x * _WaveFrequency/20.0 - _Time * _WaveSpeed * 4.5)) * _WaveHeight*35.0;
             
 
             z += _WaveHeight;
@@ -210,7 +212,7 @@
         uniform float _FrontLightingStrength;
 
         uniform float _MaxHeight;
-        uniform float _FoamAmount;
+        uniform float _LightingOverall;
 
         inline half4 LightingWater (SurfaceOutputT s, half3 viewDir, UnityGI gi) {
 
@@ -251,7 +253,7 @@
             col += frontLighting * _BacklightColor * _FrontLightingStrength;
             // col += spec2;
 
-            return col;
+            return col * _LightingOverall;
         }
 
         inline void LightingWater_GI (SurfaceOutputT s, UnityGIInput data, inout UnityGI gi){
