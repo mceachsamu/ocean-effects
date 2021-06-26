@@ -153,13 +153,16 @@
                 float4 h = col * _WaveHeight;
                 h -= _WaveHeight/2.0;
                 return h;
+            } else {
+                float3 norm = normalize(UnpackNormal(col));
+                col = float4(norm.x, norm.y, norm.z, 1.0);
             }
             return col;
         }
 
         float4 getDistortionWomboCombo(sampler2D heightMap, float2 uv, bool norm) {
             float4 col = getDistortionHieght(heightMap, 1.0, 1.3, 1.5, uv, norm);
-            col += getDistortionHieght(heightMap, 1.0, 1.0, -1.0, uv, norm);
+            col += getDistortionHieght(heightMap, 1.0, 1.3, 1.0, uv, norm);
             col += getDistortionHieght(heightMap, 0.5, 1.3, -0.7, uv, norm);
             col += getDistortionHieght(heightMap, 2.0, 0.5, 0.5, uv, norm);
             col += getDistortionHieght(heightMap, 4.0, 0.4, 0.7, uv, norm);
@@ -293,21 +296,24 @@
             half4 depth = tex2D (_CameraDepthTexture, tex);
 
             o.Depth = depth;
-            o.Albedo = c;
             o.Gloss = _Glossiness;
             o.Ambience = float3(_AmbientColor.r, _AmbientColor.g, _AmbientColor.b);
 
             float4 normM = (getDistortionWomboCombo(_NormalMap, IN.uv_MainTex, true));
-            normM = float4(pow(normM.x, _NormalMapStrength2), pow(normM.x, _NormalMapStrength2), pow(normM.z, _NormalMapStrength2), pow(normM.w, _NormalMapStrength2));
-            normM = normM * _NormalMapStrength;
+            // normM = float4(pow(normM.x, _NormalMapStrength2), pow(normM.x, _NormalMapStrength2), pow(normM.z, _NormalMapStrength2), pow(normM.w, _NormalMapStrength2));
+            // normM = normM * _NormalMapStrength;
             // float4 norm1 = tex2D(normalM, getDistortionUV(IN.uv_MainTex, 1.0));
             // float4 norm2 = tex2D(_NormalMap, getDistortionUV(IN.uv_MainTex, 1.0));
             // float4 norm3 = normalM;//(norm1 + norm2) * _NormalMapStrength2;
             float3 nmNormal = normalize((normM));
+
+            o.Normal = o.Normal + UnpackNormal(normM);
             // WorldNormalVector (IN, normM);   
             // normM = mul(unity_ObjectToWorld, normM);
             // o.NormalM = o.Normal;
-            o.Normal = o.Normal + nmNormal;
+            // o.Normal = o.Normal + nmNormal;
+
+            o.Albedo = normalize(normM);
             // o.Normal = nmNormal;//(float3(0.0, 1.0, 0.0) + nmNormal * _NormalMapStrength) / 2.0;
             o.Position = IN.worldPos;
         }
