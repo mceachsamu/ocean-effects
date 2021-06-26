@@ -18,9 +18,10 @@
         _RimAmount("rim amount", Range(0, 5)) = 1
         _Glossiness("Glossiness", Range(0, 50)) = 1
         _ShadingIntensity("shading intensity", Range(0.0, 30.0)) = 1.0
+        _ShadingStrength("shading intensity", Range(0.0, 100.0)) = 1.0
 
-        _NormalMapStrength("normal map strength", Range(0.0,30.0)) = 1.0
-        _NormalMapStrength2("normal map strength 2", Range(0.0,1.0)) = 1.0
+        _NormalMapStrength("normal map strength", Range(0.0,10.0)) = 0.0
+        _NormalMapStrength2("normal map strength 2", Range(0.0,10.0)) = 0.0
         _NormalMapDisplacement("normal map displacement", Range(0.0,1.0)) = 1.0
         _NormalScrollSpeed("normal scroll speed", Range(0.0,1.0)) = 1.0
         _TextureFrequency("texture frequency", Range(0.0,40.0)) = 1.0
@@ -35,7 +36,7 @@
 
         _WaveFrequency("wave frequency",  Range(0.0, 1.0)) = 1.0
         _WaveSpeed("wave speed",  Range(0.0,100.0)) = 1
-        _WaveHeight("wave height", Range(0.0,0.05)) = 0.01
+        _WaveHeight("wave height", Range(0.0,10)) = 0.0
 
         _NormalSearch("normal search", Range(0.0,0.1)) = 0.01
         _TextureSize("texture size", float) = 100.0
@@ -100,6 +101,7 @@
 
         uniform sampler2D _NoiseTexture;
         uniform sampler2D _NoiseTexture2;
+        uniform sampler2D _NormalMap;
         uniform float _WaveFrequency;
         uniform float _WaveSpeed;
         uniform float _WaveHeight;
@@ -108,11 +110,12 @@
         uniform float _NormalMapDisplacement;
         uniform float _TextureFrequency;
         uniform float _NormalScrollSpeed;
+        uniform float _NormalMapStrength;
+        uniform float _NormalMapStrength2;
 
         float4 getDistortion(float4 position) {
             float4 wPosition = mul (unity_ObjectToWorld, position);
             float time = _Time * _WaveSpeed;
-
 
             float z = 0.0;
             // z -= 1.0 * (sin(wPosition.x * _WaveFrequency*10 + _Time * _WaveSpeed)) * _WaveHeight*2.0;
@@ -132,6 +135,40 @@
             position = mul(unity_WorldToObject, wPosition);
             return position;
         }
+
+        float2 getDistortionUV(float2 uv, float speed) {
+            float2 uv2 = float2(uv.x + _Time.x * _WaveSpeed * speed, uv.y);
+            return uv2 * _WaveFrequency;
+        }
+
+        float2 getDistortionUVNeg(float2 uv, float speed) {
+            float2 uv2 = float2(uv.x - _Time.x * _WaveSpeed * speed, uv.y);
+            return uv2 * _WaveFrequency;
+        }
+
+        float4 getDistortionHieght(sampler2D heightMap, float2 frequency, float height, float speed, float2 uv, bool norm) {
+            float2 uvDis = getDistortionUV(uv, speed);
+            float4 col = tex2Dlod(heightMap, float4(uvDis.xy * frequency, 0, 0)) * height;
+            if (!norm) {
+                float4 h = col * _WaveHeight;
+                h -= _WaveHeight/2.0;
+                return h;
+            }
+            return col;
+        }
+
+        float4 getDistortionWomboCombo(sampler2D heightMap, float2 uv, bool norm) {
+            float4 col = getDistortionHieght(heightMap, 1.0, 1.3, 1.5, uv, norm);
+            col += getDistortionHieght(heightMap, 1.0, 1.0, -1.0, uv, norm);
+            col += getDistortionHieght(heightMap, 0.5, 1.3, -0.7, uv, norm);
+            col += getDistortionHieght(heightMap, 2.0, 0.5, 0.5, uv, norm);
+            col += getDistortionHieght(heightMap, 4.0, 0.4, 0.7, uv, norm);
+            col += getDistortionHieght(heightMap, 3.0, 0.2, -2.7, uv, norm);
+            col += getDistortionHieght(heightMap, 0.1, 2.0, 0.3, uv, norm);
+            return col;
+        }
+
+        // getDistortedNormal(sampler2D )
 
         float3 getDistortedNormal(float4 position, float3 normal, float step) {
             float4 pos1 = getDistortion(position) - getDistortion(float4(position.x + step, position.y + step, position.z, position.w));
@@ -155,10 +192,15 @@
 
         void disp (inout appdata v)
         {
-            float4 col = tex2Dlod (_NoiseTexture, float4(v.texcoord.xy,0,0));//tex2D(_NoiseTexture, v.texcoord);
-            float4 distortion = getDistortion(v.vertex);
-            v.vertex.z += distortion.z;
-            v.normal = getDistortedNormal(v.vertex, v.normal, _NormalSearch);
+            float4 distortion = getDistortionWomboCombo(_NoiseTexture, v.texcoord, false);
+
+            v.vertex.z += distortion;
+
+            // float4 normM = normalize(getDistortionWomboCombo(_NormalMap, v.texcoord, true));
+            // normM = float4(pow(normM.x, _NormalMapStrength2), pow(normM.x, _NormalMapStrength2), pow(normM.z, _NormalMapStrength2), pow(normM.w, _NormalMapStrength2));
+            // normM = normM * _NormalMapStrength;
+            
+            // v.normal = UnpackNormal(normM);
         }
 
         struct Input {
@@ -183,7 +225,6 @@
         };
         
         sampler2D _MainTex;
-        sampler2D _NormalMap;
         sampler2D _CameraDepthTexture;
         uniform fixed4 _Color;
         uniform fixed4 _AmbientColor;
@@ -192,9 +233,7 @@
         uniform float _RimAmount;
         uniform float _Glossiness;
         uniform float _ShadingIntensity;
-
-        uniform float _NormalMapStrength;
-        uniform float _NormalMapStrength2;
+        uniform float _ShadingStrength;
 
         uniform float _BackLightNormalStrength;
         uniform float _BackLightPower;
@@ -205,22 +244,19 @@
         uniform float _FrontLightingStrength;
 
         inline half4 LightingWater (SurfaceOutputT s, half3 viewDir, UnityGI gi) {
-
-            float3 normC = normalize(normalize(s.Normal) + s.NormalM);
-
             float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
-            float NdotL = pow(saturate(dot(normalize(normC) , lightDir)), _ShadingIntensity);
+            float NdotL = pow(saturate(dot(s.Normal , lightDir)), _ShadingIntensity) * _ShadingStrength;
 
             float3 H = normalize(lightDir + normalize(viewDir));
-            float P = dot(normalize(viewDir), normalize(s.Normal));
-            float NdotH = dot(normC, H);
+            float P = dot(normalize(viewDir), s.Normal);
+            float NdotH = dot(s.Normal, H);
             float specIntensity = 1.0 - saturate(pow(NdotH, s.Gloss));
 
-            float3 R = 2.0 * (normC) * dot((normC), normalize(lightDir)) - normalize(lightDir);
+            float3 R = 2.0 * (s.Normal) * dot(s.Normal, normalize(lightDir)) - normalize(lightDir);
             float spec2 = _SpecColor * pow(max(0, dot(R, normalize(viewDir))), _Glossiness);
             specIntensity = spec2;
 
-            float rimDot = clamp((1.0 - dot(normalize(viewDir), normalize(s.Normal))), -50.0, 50.0);
+            float rimDot = clamp((1.0 - dot(normalize(viewDir), s.Normal)), -50.0, 50.0);
             float rim = pow(rimDot, _RimAmount);
 
             float depth = s.Depth * _DepthMultiplier;
@@ -230,8 +266,8 @@
 
             // float fakeDensity = saturate((dot(float3(0.0, 0.0, 1.0), s.Normal)) + (dot(float3(1.0, 0.0, 0.0), s.Normal))) * _FakeDensityMult;
             // float fakeDensity = 1.0 - saturate((dot(float3(0.0, 1.0, 0.0), s.Normal))) * _FakeDensityMult;
-            float fakeDensity = saturate((0.0 + (normalize(s.Normal).z))) * _FakeDensityMult;
-            float fakeDensity2 = saturate((1.0 - (normalize(s.Normal).z))) * _DepthMultiplier;
+            float fakeDensity = pow(saturate((0.0 + (s.Normal.z))) * _FakeDensityMult, 4.0);
+            float fakeDensity2 = pow(saturate((1.0 - (s.Normal.z))) * _DepthMultiplier, 10.0);
             backLighting *= fakeDensity;
             // frontLighting *= fakeDensity;
 
@@ -239,9 +275,9 @@
             col += rim * _RimColor;
             col += specIntensity * _SpecularColor;
             col += NdotL * _Color * fakeDensity2;
-            col += backLighting * _BacklightColor;
+            col += backLighting * _BacklightColor * 5.0;
             col += frontLighting * _BacklightColor * _FrontLightingStrength;
-            // col += spec2;
+            col += spec2;
             return col;
         }
 
@@ -261,12 +297,18 @@
             o.Gloss = _Glossiness;
             o.Ambience = float3(_AmbientColor.r, _AmbientColor.g, _AmbientColor.b);
 
-            float4 norm1 = tex2D(_NormalMap, GetNormUVPositive(IN.uv_MainTex));
-            float4 norm2 = tex2D(_NormalMap, GetNormUVNegative(IN.uv_MainTex));
-            float4 norm3 = (norm1 + norm2) * _NormalMapStrength2;
-            float3 nmNormal = UnpackNormal(norm3) * _NormalMapStrength;
-            WorldNormalVector (IN, o.Normal);
-            o.NormalM = nmNormal;
+            float4 normM = (getDistortionWomboCombo(_NormalMap, IN.uv_MainTex, true));
+            normM = float4(pow(normM.x, _NormalMapStrength2), pow(normM.x, _NormalMapStrength2), pow(normM.z, _NormalMapStrength2), pow(normM.w, _NormalMapStrength2));
+            normM = normM * _NormalMapStrength;
+            // float4 norm1 = tex2D(normalM, getDistortionUV(IN.uv_MainTex, 1.0));
+            // float4 norm2 = tex2D(_NormalMap, getDistortionUV(IN.uv_MainTex, 1.0));
+            // float4 norm3 = normalM;//(norm1 + norm2) * _NormalMapStrength2;
+            float3 nmNormal = normalize((normM));
+            // WorldNormalVector (IN, normM);   
+            // normM = mul(unity_ObjectToWorld, normM);
+            // o.NormalM = o.Normal;
+            o.Normal = o.Normal + nmNormal;
+            // o.Normal = nmNormal;//(float3(0.0, 1.0, 0.0) + nmNormal * _NormalMapStrength) / 2.0;
             o.Position = IN.worldPos;
         }
         ENDCG

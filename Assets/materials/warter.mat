@@ -52,7 +52,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NoiseTexture:
-        m_Texture: {fileID: 2800000, guid: a4faff2ad344440d3aa13de53fea978d, type: 3}
+        m_Texture: {fileID: 2800000, guid: cccff4a27fab24209a84f83cedb8b795, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NoiseTexture2:
@@ -60,7 +60,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: 35df08eb491074d869d62af1e641a325, type: 3}
+        m_Texture: {fileID: 2800000, guid: fbe2f81c775314ea09952679dcfc866c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -76,52 +76,53 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BackLightNormalStrength: 0
-    - _BackLightPower: 4.07
-    - _BackLightStrength: 8.5
+    - _BackLightNormalStrength: 0.027
+    - _BackLightPower: 3.6
+    - _BackLightStrength: 0.08
     - _BumpScale: 1
     - _Cutoff: 0.5
-    - _DepthMultiplier: 2.34
+    - _DepthMultiplier: 1.14
     - _DetailNormalMapScale: 1
     - _Displacement: 0.001
     - _DstBlend: 0
-    - _FakeDensityMult: 0.96
-    - _FrontLightingStrength: 0.06
+    - _FakeDensityMult: 4.13
+    - _FrontLightingStrength: 0.17
     - _GlossMapScale: 1
-    - _Glossiness: 41.9
+    - _Glossiness: 8.7
     - _GlossyReflections: 1
-    - _MaxDistanceTess: 2000
+    - _MaxDistanceTess: 0
     - _Metallic: 0
     - _Mode: 0
-    - _NormalMapDisplacement: 0.07
-    - _NormalMapStrength: 0.6
-    - _NormalMapStrength2: 0.24
+    - _NormalMapDisplacement: 0.003
+    - _NormalMapStrength: 0.67
+    - _NormalMapStrength2: 0.8
     - _NormalScrollSpeed: 0.476
     - _NormalSearch: 0.001
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Phong: 0.41
-    - _RimAmount: 2.12
-    - _ShadingIntensity: 8
+    - _RimAmount: 1.77
+    - _ShadingIntensity: 2.4
+    - _ShadingStrength: 28.8
     - _SmoothnessTextureChannel: 0
     - _SpecIntensity: 1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Tess: 11.8
-    - _TextureFrequency: 40
+    - _Tess: 5.4
+    - _TextureFrequency: 4.3
     - _TextureSize: 100
     - _UVSec: 0
-    - _WaveFrequency: 0.6
-    - _WaveHeight: 0.0277
-    - _WaveSpeed: 11
+    - _WaveFrequency: 0.367
+    - _WaveHeight: 5.76
+    - _WaveSpeed: 0.8
     - _ZWrite: 1
     m_Colors:
     - _AmbientColor: {r: 0, g: 0, b: 0, a: 0}
-    - _BacklightColor: {r: 0.0020469967, g: 0.4339623, b: 0.37891427, a: 0}
+    - _BacklightColor: {r: 0, g: 1, b: 0.8687782, a: 0}
     - _Color: {r: 0, g: 0.85490227, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _RimColor: {r: 0.0031594948, g: 0.6698113, b: 0.6368087, a: 0}
-    - _SpecColor: {r: 0.9716981, g: 0.93961376, b: 0.93961376, a: 0.5}
+    - _RimColor: {r: 0.01601993, g: 0.3773585, b: 0.3634609, a: 0}
+    - _SpecColor: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 0.5}
     - _SpecularColor: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 0.5}
     - _WaveHeight: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
