@@ -5,6 +5,7 @@
         _Phong ("phong", Range(0,1)) = 0.5
         _MaxDistanceTess("mex tes distance", Range(0, 2000)) = 100
         _MainTex ("Base (RGB)", 2D) = "white" {}
+        _UnderWaterTex ("Base (RGB)", 2D) = "white" {}
         _NoiseTexture ("Noise map", 2D) = "white" {}
         _NoiseTexture2 ("Noise map 2", 2D) = "white" {}
         _DispTex ("Disp Texture", 2D) = "gray" {}
@@ -68,6 +69,10 @@
         float4 tessDistance (appdata v0, appdata v1, appdata v2) {
             float minDist = 0.0;
             float maxDist = _MaxDistanceTess;
+            float dist1 = v0.vertex - mul(unity_ObjectToWorld, _WorldSpaceCameraPos);
+            float dist2 = v1.vertex - mul(unity_ObjectToWorld, _WorldSpaceCameraPos);
+            float dist3 = v2.vertex - mul(unity_ObjectToWorld, _WorldSpaceCameraPos);
+            
             return UnityDistanceBasedTess(v0.vertex, v1.vertex, v2.vertex, minDist, maxDist, _Tess);
         }
 
@@ -112,26 +117,45 @@
         uniform float _TextureFrequency;
         uniform float _NormalScrollSpeed;
 
+        uniform float _wF1;
+        uniform float _wS1;
+        uniform float _wH1;
+
+        uniform float _wFX2;
+        uniform float _wFZ2;
+        uniform float _wF2;
+        uniform float _wS2;
+        uniform float _wH2;
+
+        uniform float _wF3;
+        uniform float _wS3;
+        uniform float _wH3;
+
+        uniform float _T;
+
         float4 getDistortion(float4 position) {
             float4 wPosition = mul (unity_ObjectToWorld, position);
-            float time = _Time * _WaveSpeed;
+            float time = _T * _WaveSpeed;
 
 
             float z = 0.0;
-            // z -= 1.0 * (sin(wPosition.x * _WaveFrequency*10 + _Time * _WaveSpeed)) * _WaveHeight*2.0;
-            // z -= 1.0 * abs(sin(wPosition.x * _WaveFrequency*20 + _Time * _WaveSpeed)) * _WaveHeight*1.6;
-            z -= 1.0 * (sin(wPosition.x * _WaveFrequency/600.0 + _Time * _WaveSpeed*0.99)) * _WaveHeight*1600;
-            z -= 1.0 * (sin((wPosition.z/3.0 - wPosition.x/4.0) * _WaveFrequency/100.0 + _Time * _WaveSpeed*0.6)) * _WaveHeight*2000.0;
-            z -= 1.0 * (sin(wPosition.z * _WaveFrequency/200.0 + _Time * _WaveSpeed*0.6)) * _WaveHeight*2000.0;
-            z -= 1.0 * (sin((wPosition.z/6.0 - wPosition.x/2.0) * _WaveFrequency/1000.0 + _Time * _WaveSpeed*0.6)) * _WaveHeight*1000.0;
-            z -= 1.0 * (sin((wPosition.z/6.0 - wPosition.x/2.0) * _WaveFrequency/1000.0 - _Time * _WaveSpeed*0.9)) * _WaveHeight*1000.0;
+            // z -= 1.0 * (sin(wPosition.x * _WaveFrequency*10 + _T * _WaveSpeed)) * _WaveHeight*2.0;
+            // z -= 1.0 * abs(sin(wPosition.x * _WaveFrequency*20 + _T * _WaveSpeed)) * _WaveHeight*1.6;
+            z -= 1.0 * (sin(wPosition.x * _WaveFrequency/_wF1 + _T * _WaveSpeed*_wS1)) * _WaveHeight*_wH1;
+            z -= 1.0 * (sin((wPosition.z/_wFZ2 - wPosition.x/_wFX2) * _WaveFrequency/_wF2 + _T * _WaveSpeed*_wS2)) * _WaveHeight * _wH2;
+            z -= 1.0 * (sin(wPosition.z * _WaveFrequency/_wF3 + _T * _WaveSpeed*_wS3)) * _WaveHeight*_wH3;
+            // z -= 1.0 * (sin((wPosition.z/6.0 - wPosition.x/2.0) * _WaveFrequency/1000.0 + _T * _WaveSpeed*0.6)) * _WaveHeight*1000.0;
+            // z -= 1.0 * (sin((wPosition.z/6.0 - wPosition.x/2.0) * _WaveFrequency/1500.0 - _T * _WaveSpeed*0.9)) * _WaveHeight*7000.0;
             
-            z -= 1.0 * (sin((wPosition.z + wPosition.x) * _WaveFrequency/20.0 + _Time * _WaveSpeed*0.5)) * _WaveHeight*100.1;
-            z -= 1.0 * abs(sin((wPosition.z + wPosition.x/2.0) * _WaveFrequency/50.0 - _Time * _WaveSpeed * 2.5)) * _WaveHeight*100.0;
-            z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x/4.0) * _WaveFrequency/10.0 - _Time * _WaveSpeed * 4.5)) * _WaveHeight*79.0;
-            z -= 1.0 * abs(sin(wPosition.z * _WaveFrequency/30.0 - _Time * _WaveSpeed * 3.5)) * _WaveHeight*50.0;
-            z -= 1.0 * abs(sin(wPosition.z * _WaveFrequency/15.0 - _Time * _WaveSpeed * 3.5)) * _WaveHeight*78.0;
-            // z -= 1.0 * abs(sin(wPosition.x * _WaveFrequency/20.0 - _Time * _WaveSpeed * 4.5)) * _WaveHeight*35.0;
+            z -= 1.0 * (sin((wPosition.x) * _WaveFrequency/10.0 + _T * _WaveSpeed*1.4)) * _WaveHeight*130.1;
+            z -= 1.0 * abs(sin((wPosition.z + wPosition.x/2.0) * _WaveFrequency/40.0 - _T * _WaveSpeed * 0.5)) * _WaveHeight*140.0;
+            z -= 1.0 * abs(sin((wPosition.z/2.0 + wPosition.x) * _WaveFrequency/15.0 - _T * _WaveSpeed * 1.5)) * _WaveHeight*180.0;
+            z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x/8.0) * _WaveFrequency/10.0 - _T * _WaveSpeed * 1.1)) * _WaveHeight*250.0;
+            z -= 1.0 * abs(sin((wPosition.z/8.0 + wPosition.x) * _WaveFrequency/11.0 - _T * _WaveSpeed * 1.2)) * _WaveHeight*50.0;
+            // z -= 1.0 * abs(sin(wPosition.z * _WaveFrequency/30.0 - _T * _WaveSpeed * 2.5)) * _WaveHeight*300.0;
+            // z -= 1.0 * abs(sin(wPosition.z * _WaveFrequency/15.0 - _T * _WaveSpeed * 1.5)) * _WaveHeight*158.0;
+            // z -= 1.0 * abs(sin(wPosition.x * _WaveFrequency/40.0 - _T * _WaveSpeed * 3.5)) * _WaveHeight*200.0;
+            // z -= 1.0 * abs(sin(wPosition.x * _WaveFrequency/20.0 - _T * _WaveSpeed * 4.5)) * _WaveHeight*35.0;
             
 
             z += _WaveHeight;
@@ -153,11 +177,11 @@
         }
 
         float2 GetNormUVPositive(float2 uv) {
-            return uv * _TextureFrequency + _Time * _NormalScrollSpeed;
+            return uv * _TextureFrequency + _T * _NormalScrollSpeed;
         }
         
         float2 GetNormUVNegative(float2 uv) {
-            return uv * _TextureFrequency - _Time * _NormalScrollSpeed;
+            return uv * _TextureFrequency - _T * _NormalScrollSpeed;
         }
 
         void disp (inout appdata v)
@@ -192,6 +216,7 @@
         sampler2D _MainTex;
         sampler2D _NormalMap;
         sampler2D _CameraDepthTexture;
+        sampler2D _UnderWaterTex;
         uniform fixed4 _Color;
         uniform fixed4 _AmbientColor;
         uniform fixed4 _SpecularColor;
@@ -251,7 +276,7 @@
             col += NdotL * _Color * fakeDensity2;
             col += backLighting * _BacklightColor;
             col += frontLighting * _BacklightColor * _FrontLightingStrength;
-            // col += spec2;
+            col += (1.0 - s.Albedo.r) * _BacklightColor;
 
             return col * _LightingOverall;
         }
@@ -263,8 +288,11 @@
         void surf (Input IN, inout SurfaceOutputT o) {
             // float refraction = getDistortion(IN.worldPos.y, IN.) * 1.0;
 
-            float2 tex = float2(IN.screenPos.x, IN.screenPos.y) / IN.screenPos.w;
-            half4 c = tex2D (_NoiseTexture, IN.uv_MainTex * 10.0);
+            float yDist = (IN.worldNormal.z / 6.0) + (IN.worldNormal.x / 6.0);
+            float xDist = (IN.worldNormal.z / 8.0) + (IN.worldNormal.x / 8.0);
+
+            float2 tex = float2(IN.screenPos.x + xDist, IN.screenPos.y + yDist )/ IN.screenPos.w;
+            half4 c = tex2D (_UnderWaterTex, tex);
             half4 depth = tex2D (_CameraDepthTexture, tex);
 
             o.Depth = depth;

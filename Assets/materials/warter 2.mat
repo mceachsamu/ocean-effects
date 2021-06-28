@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: warter
+  m_Name: warter 2
   m_Shader: {fileID: 4800000, guid: 25f81d7341f0e4e888ced457b9d43567, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -114,7 +114,7 @@ Material:
     - _SpecIntensity: 1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Tess: 15.7
+    - _Tess: 9.9
     - _TextureFrequency: 40
     - _TextureSize: 100
     - _UVSec: 0

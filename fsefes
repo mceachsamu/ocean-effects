@@ -1,0 +1,7 @@
+  public float getHeight(Vector3 pos) {
+        float height = 0.0f;
+        height -= 1.0 * (Mathf.Sin(pos.x * WaveFrequency/wF1 + Time.deltaTime * WaveSpeed*wS1)) * WaveHeight*wH1;
+        height -= 1.0 * (Mathf.Sin((pos.z/wFZ2 - pos.x/wFX2) * WaveFrequency/wF2 + Time.deltaTime * WaveSpeed*wS2)) * WaveHeight * wH2;
+        height -= 1.0 * (Mathf.Sin(pos.z * WaveFrequency/wF3 + Time.deltaTime * WaveSpeed*wS3)) * WaveHeight*wH3;
+        return height;
+    }
