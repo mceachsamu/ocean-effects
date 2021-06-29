@@ -281,6 +281,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 156.026, y: 531.045, z: 651.071}
+--- !u!1 &791912037 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8789337337551889050, guid: dfb04e50e1f884927a53dc9f23dca4de, type: 3}
+  m_PrefabInstance: {fileID: 1094119940}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,7 +364,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: -0.008000879, y: -0.99944496, z: -0.032269325, w: -0.0021097485}
-  m_LocalPosition: {x: -0.03, y: 0.65, z: 6.67}
+  m_LocalPosition: {x: -0.02, y: 0.84, z: 3.76}
   m_LocalScale: {x: 25.27834, y: 6.568672, z: 25.2261}
   m_Children:
   - {fileID: 1138244696}
@@ -378,6 +383,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802fbe535ccb54ce2a23534d60e550e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  water: {fileID: 993343420}
+  lift: 1.87
 --- !u!1 &993343420 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dfb04e50e1f884927a53dc9f23dca4de, type: 3}
@@ -395,25 +402,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec6373fa078d5444b8a39d677dc4d11f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wF1: 9000
+  wF1: 5000
   wS1: 0.99
-  wH1: 3000
+  wH1: 10000
   wFX2: 4
   wFZ2: 3
-  wF2: 100
+  wF2: 10000
   wS2: 0.6
-  wH2: 1000
-  wF3: 200
+  wH2: 80000
+  wF3: 2000
   wS3: 0.6
-  wH3: 2000
-  WaveFrequency: 210
+  wH3: 9000
+  WaveFrequency: 400
   WaveSpeed: 24.7
   WaveHeight: 0.0001
+  Color: {r: 0, g: 0, b: 0, a: 0}
+  SpecColor: {r: 1, g: 1, b: 1, a: 0.5}
+  SpecularColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
+  AmbientColor: {r: 0, g: 0, b: 0, a: 0}
+  RimColor: {r: 0.009878943, g: 0.6981132, b: 0.67164254, a: 0}
+  BacklightColor: {r: 0.005339969, g: 0.3773585, b: 0.3664313, a: 0}
   count: 0
+  RimAmount: 1.97
+  Glossiness: 50
+  ShadingIntensity: 30
+  NormalMapStrength: 0.05
+  NormalMapStrength2: 0.206
+  NormalMapDisplacement: 1
+  NormalScrollSpeed: 0.068
+  TextureFrequency: 40
+  BackLightNormalStrength: 0.121
+  BackLightPower: 0.88
+  BackLightStrength: 4.67
+  DepthMultiplier: 5
+  FakeDensityMult: 1
+  FrontLightingStrength: 0.06
   water1: {fileID: 488494388}
   water2: {fileID: 1747032532}
   water3: {fileID: 1233735803}
   water4: {fileID: 2054117732}
+  water5: {fileID: 791912037}
 --- !u!1001 &1094119940
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -427,15 +455,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dfb04e50e1f884927a53dc9f23dca4de, type: 3}
       propertyPath: m_LocalScale.x
-      value: 11.443518
+      value: 33.504547
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dfb04e50e1f884927a53dc9f23dca4de, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3.7459211
+      value: 10.96738
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dfb04e50e1f884927a53dc9f23dca4de, type: 3}
       propertyPath: m_LocalScale.z
-      value: 11.443518
+      value: 33.504547
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dfb04e50e1f884927a53dc9f23dca4de, type: 3}
       propertyPath: m_LocalPosition.x
@@ -481,6 +509,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: ce577516afdb44c89bf7232a68eb9ac2, type: 2}
+    - target: {fileID: -6644035610390423412, guid: dfb04e50e1f884927a53dc9f23dca4de, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: be34549a0d9f74112b9a16f4dd79c80c, type: 2}
     - target: {fileID: 919132149155446097, guid: dfb04e50e1f884927a53dc9f23dca4de, type: 3}
       propertyPath: m_Name
       value: water
@@ -695,7 +727,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1633568326}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.58, z: 2.3866}
+  m_LocalPosition: {x: 0, y: -1.58, z: -3.4}
   m_LocalScale: {x: 1.3340033, y: 1, z: 1.0778452}
   m_Children: []
   m_Father: {fileID: 0}
@@ -788,7 +820,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f9fce806711c4dd580a4a2bc0d77920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  warter: {fileID: 0}
+  warter: {fileID: 993343420}
 --- !u!1 &1747032532 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2941726363514872176, guid: dfb04e50e1f884927a53dc9f23dca4de, type: 3}

@@ -96,7 +96,7 @@ Material:
     - _Glossiness: 50
     - _GlossyReflections: 1
     - _LightingOverall: 1
-    - _MaxDistanceTess: 23
+    - _MaxDistanceTess: 200
     - _MaxHeight: -10
     - _Metallic: 0
     - _Mode: 0

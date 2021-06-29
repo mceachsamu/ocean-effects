@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class camera : MonoBehaviour
 {
+    
+    public GameObject water;
+
+    [Range(0.0f, 10.0f)]
+    public float lift = 0.0f;
+
     // Start is called before the first frame update
     void Start()
     {
-        // this.GetComponent<Camera>().depthTextureMode = DepthTextureMode.Depth;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        float height = water.GetComponent<warterScript>().getHeight(this.transform.position);
+        Vector3 pos = this.transform.position;
+        pos.y = height + lift;
+
+        this.transform.position = pos;
     }
 }
