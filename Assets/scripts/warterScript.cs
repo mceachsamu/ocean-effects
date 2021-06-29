@@ -22,8 +22,60 @@ public class warterScript : MonoBehaviour
     public float WaveSpeed = 24.7f;
 
     public float WaveHeight = 0.0005f;
-
+    public Color Color = new Color(1.0f * 255.0f,1.0f * 255.0f,1.0f * 255.0f,0.0f * 255.0f);
+    public Color SpecColor = new Color(0.5f * 255.0f,0.5f * 255.0f,0.5f * 255.0f,0.5f * 255.0f);
+    public Color SpecularColor = new Color(0.5f * 255.0f,0.5f * 255.0f,0.5f * 255.0f,0.5f * 255.0f);
+    public Color AmbientColor = new Color(0.0f * 255.0f,0.0f * 255.0f,0.0f * 255.0f,0.0f * 255.0f);
+    public Color RimColor = new Color(0.0f * 255.0f,0.0f * 255.0f,0.0f * 255.0f,0.0f * 255.0f);
+    public Color BacklightColor = new Color(0.0f * 255.0f,0.0f * 255.0f,0.0f * 255.0f,0.0f * 255.0f);
     public float count = 0;
+    
+    [Range(0.0f, 5.0f)]
+    public float RimAmount = 1.0f;
+
+    [Range(0.0f, 50.0f)]
+    public float Glossiness = 1.0f;
+
+    [Range(0.0f, 30.0f)]
+    public float ShadingIntensity = 1.0f;
+
+    [Range(0.0f, 30.0f)]
+    public float NormalMapStrength = 1.0f;
+
+    [Range(0.0f, 1.0f)]
+    public float NormalMapStrength2 = 1.0f;
+
+    [Range(0.0f, 1.0f)]
+    public float NormalMapDisplacement = 1.0f;
+
+    [Range(0.0f, 1.0f)]
+    public float NormalScrollSpeed = 1.0f;
+
+    [Range(0.0f, 40.0f)]
+    public float TextureFrequency = 1.0f;
+
+    [Range(0.0f, 1.0f)]
+    public float BackLightNormalStrength = 0.5f;
+    [Range(0.0f, 10.0f)]
+    public float BackLightPower = 1.0f;
+
+    [Range(0.0f, 10.0f)]
+    public float BackLightStrength = 1.0f;
+
+    [Range(0.0f, 5.0f)]
+    public float DepthMultiplier = 1.0f;
+
+    [Range(0.0f, 5.0f)]
+    public float FakeDensityMult = 1.0f;
+
+    [Range(0.0f, 1.0f)]
+    public float FrontLightingStrength = 0.5f;
+
+    public GameObject water1;
+    public GameObject water2;
+    public GameObject water3;
+    public GameObject water4;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,27 +86,55 @@ public class warterScript : MonoBehaviour
     void Update()
     {
         count+= 0.0005f;
-
-        this.GetComponent<Renderer>().material.SetFloat("_wF1", wF1);
-        this.GetComponent<Renderer>().material.SetFloat("_wS1", wS1);
-        this.GetComponent<Renderer>().material.SetFloat("_wH1", wH1);
-        this.GetComponent<Renderer>().material.SetFloat("_wFX2", wFX2);
-        this.GetComponent<Renderer>().material.SetFloat("_wFZ2", wFZ2);
-        this.GetComponent<Renderer>().material.SetFloat("_wF2", wF2);
-        this.GetComponent<Renderer>().material.SetFloat("_wS2", wS2);
-        this.GetComponent<Renderer>().material.SetFloat("_wH2", wH2);
-        this.GetComponent<Renderer>().material.SetFloat("_wF3", wF3);
-        this.GetComponent<Renderer>().material.SetFloat("_wS3", wS3);
-        this.GetComponent<Renderer>().material.SetFloat("_wH3", wH3);
-
-        this.GetComponent<Renderer>().material.SetFloat("_WaveFrequency", WaveFrequency);
-        this.GetComponent<Renderer>().material.SetFloat("_WaveSpeed", WaveSpeed);
-        this.GetComponent<Renderer>().material.SetFloat("_WaveHeight", WaveHeight);
-
-        this.GetComponent<Renderer>().material.SetFloat("_T", count);
+        setShaderProperties(water1);
+        setShaderProperties(water2);
+        setShaderProperties(water3);
+        setShaderProperties(water4);
     }
 
-  public float getHeight(Vector3 pos) {
+    public void setShaderProperties(GameObject g) {
+        g.GetComponent<Renderer>().material.SetFloat("_wF1", wF1);
+        g.GetComponent<Renderer>().material.SetFloat("_wS1", wS1);
+        g.GetComponent<Renderer>().material.SetFloat("_wH1", wH1);
+        g.GetComponent<Renderer>().material.SetFloat("_wFX2", wFX2);
+        g.GetComponent<Renderer>().material.SetFloat("_wFZ2", wFZ2);
+        g.GetComponent<Renderer>().material.SetFloat("_wF2", wF2);
+        g.GetComponent<Renderer>().material.SetFloat("_wS2", wS2);
+        g.GetComponent<Renderer>().material.SetFloat("_wH2", wH2);
+        g.GetComponent<Renderer>().material.SetFloat("_wF3", wF3);
+        g.GetComponent<Renderer>().material.SetFloat("_wS3", wS3);
+        g.GetComponent<Renderer>().material.SetFloat("_wH3", wH3);
+
+        g.GetComponent<Renderer>().material.SetFloat("_WaveFrequency", WaveFrequency);
+        g.GetComponent<Renderer>().material.SetFloat("_WaveSpeed", WaveSpeed);
+        g.GetComponent<Renderer>().material.SetFloat("_WaveHeight", WaveHeight);
+
+        g.GetComponent<Renderer>().material.SetFloat("_T", count);
+
+        g.GetComponent<Renderer>().material.SetFloat("_RimAmount", RimAmount);
+        g.GetComponent<Renderer>().material.SetFloat("_Glossiness", Glossiness);
+        g.GetComponent<Renderer>().material.SetFloat("_ShadingIntensity", ShadingIntensity);
+        g.GetComponent<Renderer>().material.SetFloat("_NormalMapStrength", NormalMapStrength);
+        g.GetComponent<Renderer>().material.SetFloat("_NormalMapStrength2", NormalMapStrength2);
+        g.GetComponent<Renderer>().material.SetFloat("_NormalMapDisplacement", NormalMapDisplacement);
+        g.GetComponent<Renderer>().material.SetFloat("_NormalScrollSpeed", NormalScrollSpeed);
+        g.GetComponent<Renderer>().material.SetFloat("_TextureFrequency", TextureFrequency);
+        g.GetComponent<Renderer>().material.SetFloat("_BackLightNormalStrength", BackLightNormalStrength);
+        g.GetComponent<Renderer>().material.SetFloat("_BackLightPower", BackLightPower);
+        g.GetComponent<Renderer>().material.SetFloat("_BackLightStrength", BackLightStrength);
+        g.GetComponent<Renderer>().material.SetFloat("_DepthMultiplier", DepthMultiplier);
+        g.GetComponent<Renderer>().material.SetFloat("_FakeDensityMult", FakeDensityMult);
+        g.GetComponent<Renderer>().material.SetFloat("_FrontLightingStrength", FrontLightingStrength);
+
+        g.GetComponent<Renderer>().material.SetVector("_Color", Color);
+        g.GetComponent<Renderer>().material.SetVector("_SpecColor", SpecColor);
+        g.GetComponent<Renderer>().material.SetVector("_SpecularColor", SpecularColor);
+        g.GetComponent<Renderer>().material.SetVector("_AmbientColor", AmbientColor);
+        g.GetComponent<Renderer>().material.SetVector("_RimColor", RimColor);
+        g.GetComponent<Renderer>().material.SetVector("_BacklightColor", BacklightColor);
+    }
+
+    public float getHeight(Vector3 pos) {
         float height = this.transform.position.y;
         float time = count;
         height -= 1.0f * (Mathf.Sin(pos.x * WaveFrequency/wF1 + time * WaveSpeed*wS1)) * WaveHeight*wH1;

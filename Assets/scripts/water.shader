@@ -8,14 +8,13 @@
         _UnderWaterTex ("Base (RGB)", 2D) = "white" {}
         _NoiseTexture ("Noise map", 2D) = "white" {}
         _NoiseTexture2 ("Noise map 2", 2D) = "white" {}
-        _DispTex ("Disp Texture", 2D) = "gray" {}
         _NormalMap ("Normalmap", 2D) = "bump" {}
-        _Displacement ("Displacement", Range(0.0005, 0.00001)) = 0.001
         _Color ("Color", color) = (1,1,1,0)
         _SpecColor ("Spec color", color) = (0.5,0.5,0.5,0.5)
         _SpecularColor ("Specular color", color) = (0.5,0.5,0.5,0.5)
         _AmbientColor("Ambient Color", Color) = (0.0,0.0,0.0,0.0)
         _RimColor("Rim Color", Color) = (0.0,0.0,0.0,0.0)
+        _BacklightColor("backlight Color", Color) = (0.0,0.0,0.0,0.0)
         _RimAmount("rim amount", Range(0, 5)) = 1
         _Glossiness("Glossiness", Range(0, 50)) = 1
         _ShadingIntensity("shading intensity", Range(0.0, 30.0)) = 1.0
@@ -29,7 +28,6 @@
         _BackLightNormalStrength("backlighting normal strength",  Range(0.0,1.0)) = 0.5
         _BackLightPower("backlighting power",  Range(0.0,10.0)) = 1.0
         _BackLightStrength("backlighting strength",  Range(0.0,10.0)) = 1.0
-        _BacklightColor("backlight Color", Color) = (0.0,0.0,0.0,0.0)
         _DepthMultiplier("depth multiplier",  Range(0.0,5.0)) = 1.0
         _FakeDensityMult("density multiplier", Range(0.0,5.0)) = 1.0
         _FrontLightingStrength("front lighting strength", Range(0.0, 1.0)) = 0.5
@@ -75,9 +73,6 @@
             
             return UnityDistanceBasedTess(v0.vertex, v1.vertex, v2.vertex, minDist, maxDist, _Tess);
         }
-
-        sampler2D _DispTex;
-        float _Displacement;
 
         float3 getNormal(float4 step, float2 uv, sampler2D heightMap, float size)
         {
@@ -147,11 +142,11 @@
             // z -= 1.0 * (sin((wPosition.z/6.0 - wPosition.x/2.0) * _WaveFrequency/1000.0 + _T * _WaveSpeed*0.6)) * _WaveHeight*1000.0;
             // z -= 1.0 * (sin((wPosition.z/6.0 - wPosition.x/2.0) * _WaveFrequency/1500.0 - _T * _WaveSpeed*0.9)) * _WaveHeight*7000.0;
             
-            z -= 1.0 * (sin((wPosition.x) * _WaveFrequency/10.0 + _T * _WaveSpeed*1.4)) * _WaveHeight*130.1;
-            z -= 1.0 * abs(sin((wPosition.z + wPosition.x/2.0) * _WaveFrequency/40.0 - _T * _WaveSpeed * 0.5)) * _WaveHeight*140.0;
-            z -= 1.0 * abs(sin((wPosition.z/2.0 + wPosition.x) * _WaveFrequency/15.0 - _T * _WaveSpeed * 1.5)) * _WaveHeight*180.0;
-            z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x/8.0) * _WaveFrequency/10.0 - _T * _WaveSpeed * 1.1)) * _WaveHeight*250.0;
-            z -= 1.0 * abs(sin((wPosition.z/8.0 + wPosition.x) * _WaveFrequency/11.0 - _T * _WaveSpeed * 1.2)) * _WaveHeight*50.0;
+            z -= 1.0 * (sin((wPosition.x) * _WaveFrequency/20.0 + _T * _WaveSpeed*1.4)) * _WaveHeight*230.1;
+            z -= 1.0 * abs(sin((wPosition.z + wPosition.x/2.0) * _WaveFrequency/40.0 - _T * _WaveSpeed * 0.5)) * _WaveHeight*240.0;
+            z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x) * _WaveFrequency/60.0 - _T * _WaveSpeed * 1.5)) * _WaveHeight*400.0;
+            z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x/8.0) * _WaveFrequency/10.0 - _T * _WaveSpeed * 1.1)) * _WaveHeight*350.0;
+            z -= 1.0 * abs(sin((wPosition.z/8.0 + wPosition.x) * _WaveFrequency/11.0 - _T * _WaveSpeed * 1.2)) * _WaveHeight*150.0;
             // z -= 1.0 * abs(sin(wPosition.z * _WaveFrequency/30.0 - _T * _WaveSpeed * 2.5)) * _WaveHeight*300.0;
             // z -= 1.0 * abs(sin(wPosition.z * _WaveFrequency/15.0 - _T * _WaveSpeed * 1.5)) * _WaveHeight*158.0;
             // z -= 1.0 * abs(sin(wPosition.x * _WaveFrequency/40.0 - _T * _WaveSpeed * 3.5)) * _WaveHeight*200.0;

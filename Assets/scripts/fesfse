@@ -1,0 +1,47 @@
+        public Color Color = new Color(1.0f,1.0f,1.0f,0.0f);
+        public Color SpecColor = new Color(0.5f,0.5f,0.5f,0.5f);
+        public Color SpecularColor = new Color(0.5f,0.5f,0.5f,0.5f);
+        public Color AmbientColor = new Color(0.0f,0.0f,0.0f,0.0f);
+        public Color RimColor = new Color(0.0f,0.0f,0.0f,0.0f);
+        public Color BacklightColor = new Color(0.0f,0.0f,0.0f,0.0f);
+        
+        [Range(0.0f, 5.0f)]
+        public float RimAmount = 1.0f;
+
+        [Range(0.0f, 50.0f)]
+        public float Glossiness = 1.0f;
+
+        [Range(0.0f, 30.0f)]
+        public float ShadingIntensity = 1.0f;
+
+        [Range(0.0f, 30.0f)]
+        public float NormalMapStrength = 1.0f;
+
+        [Range(0.0f, 1.0f)]
+        public float NormalMapStrength2 = 1.0f;
+
+        [Range(0.0f, 1.0f)]
+        public float NormalMapDisplacement = 1.0f;
+
+        [Range(0.0f, 1.0f)]
+        public float NormalScrollSpeed = 1.0f;
+
+        [Range(0.0f, 40.0f)]
+        public float TextureFrequency = 1.0f;
+
+        [Range(0.0f, 1.0f)]
+        public float BackLightNormalStrength = 0.5f;
+        [Range(0.0f, 10.0f)]
+        public float BackLightPower = 1.0f;
+
+        [Range(0.0f, 10.0f)]
+        public float BackLightStrength = 1.0f;
+
+        [Range(0.0f, 5.0f)]
+        public float DepthMultiplier = 1.0f;
+
+        [Range(0.0f, 5.0f)]
+        public float FakeDensityMult = 1.0f;
+
+        [Range(0.0f, 1.0f)]
+        public float FrontLightingStrength = 0.5f;

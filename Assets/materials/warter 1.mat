@@ -104,7 +104,7 @@ Material:
     - _NormalMapStrength: 0.05
     - _NormalMapStrength2: 0.206
     - _NormalScrollSpeed: 0.068
-    - _NormalSearch: 0.0005
+    - _NormalSearch: 0.001
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Phong: 0.367
