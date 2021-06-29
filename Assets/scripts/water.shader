@@ -272,7 +272,8 @@
             col += NdotL * _Color * fakeDensity2;
             col += backLighting * _BacklightColor;
             col += frontLighting * _BacklightColor * _FrontLightingStrength;
-            col += (1.0 - s.Albedo.r) * _BacklightColor;
+            col.g -= (1.0 - s.Albedo.r) * 0.2;
+            col.r -= (1.0 - s.Albedo.r) * 0.2;
 
             return col * _LightingOverall;
         }
