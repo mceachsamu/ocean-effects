@@ -71,6 +71,8 @@ public class warterScript : MonoBehaviour
     [Range(0.0f, 1.0f)]
     public float FrontLightingStrength = 0.5f;
 
+    public float NormalSearch = 0.01f;
+
     public GameObject water1;
     public GameObject water2;
     public GameObject water3;
@@ -91,7 +93,14 @@ public class warterScript : MonoBehaviour
         setShaderProperties(water2);
         setShaderProperties(water3);
         setShaderProperties(water4);
-        setShaderProperties(water5);
+        // setShaderProperties(water5);
+
+    }
+
+    public void setPos(Vector3 position) {
+        Vector3 pos = this.transform.position;
+        pos.z = position.z;
+        this.transform.position = pos;
     }
 
     public void setShaderProperties(GameObject g) {
@@ -127,6 +136,7 @@ public class warterScript : MonoBehaviour
         g.GetComponent<Renderer>().material.SetFloat("_DepthMultiplier", DepthMultiplier);
         g.GetComponent<Renderer>().material.SetFloat("_FakeDensityMult", FakeDensityMult);
         g.GetComponent<Renderer>().material.SetFloat("_FrontLightingStrength", FrontLightingStrength);
+        g.GetComponent<Renderer>().material.SetFloat("_NormalSearch", NormalSearch);
 
         g.GetComponent<Renderer>().material.SetVector("_Color", Color);
         g.GetComponent<Renderer>().material.SetVector("_SpecColor", SpecColor);
@@ -141,7 +151,7 @@ public class warterScript : MonoBehaviour
         float time = count;
         height -= 1.0f * (Mathf.Sin(pos.x * WaveFrequency/wF1 + time * WaveSpeed*wS1)) * WaveHeight*wH1;
         height -= 1.0f * (Mathf.Sin((pos.z/wFZ2 - pos.x/wFX2) * WaveFrequency/wF2 + time * WaveSpeed*wS2)) * WaveHeight * wH2;
-        height -= 1.0f * (Mathf.Sin(pos.z * WaveFrequency/wF3 + time * WaveSpeed*wS3)) * WaveHeight*wH3;
+        height -= 1.0f * Mathf.Abs(Mathf.Sin(pos.z * WaveFrequency/wF3 + time * WaveSpeed*wS3)) * WaveHeight*wH3;
         return height;
     }
 }
