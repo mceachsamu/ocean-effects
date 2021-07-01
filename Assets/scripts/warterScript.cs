@@ -71,6 +71,9 @@ public class warterScript : MonoBehaviour
     [Range(0.0f, 1.0f)]
     public float FrontLightingStrength = 0.5f;
 
+    [Range(0.0f, 1.0f)]
+    public float LightingOverall = 1.0f;
+
     public float NormalSearch = 0.01f;
 
     public GameObject water1;
@@ -137,6 +140,7 @@ public class warterScript : MonoBehaviour
         g.GetComponent<Renderer>().material.SetFloat("_FakeDensityMult", FakeDensityMult);
         g.GetComponent<Renderer>().material.SetFloat("_FrontLightingStrength", FrontLightingStrength);
         g.GetComponent<Renderer>().material.SetFloat("_NormalSearch", NormalSearch);
+        g.GetComponent<Renderer>().material.SetFloat("_LightingOverall", LightingOverall);
 
         g.GetComponent<Renderer>().material.SetVector("_Color", Color);
         g.GetComponent<Renderer>().material.SetVector("_SpecColor", SpecColor);

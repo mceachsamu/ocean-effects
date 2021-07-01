@@ -22,7 +22,7 @@ public class camera : MonoBehaviour
         float height = water.GetComponent<warterScript>().getHeight(this.transform.position);
         Vector3 pos = this.transform.position;
         pos.y = height + lift;
-        // pos.z -= 0.001f;
+        // pos.z -= 0.005f;
         this.transform.position = pos;
 
         water.GetComponent<warterScript>().setPos(this.transform.position);

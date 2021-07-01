@@ -146,8 +146,8 @@
             z -= 1.0 * abs(sin((wPosition.z + wPosition.x/24.0) * _WaveFrequency/50.0 - _T * _WaveSpeed * 3.5)) * _WaveHeight*240.0;
             z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x) * _WaveFrequency/100.0 - _T * _WaveSpeed * 1.5)) * _WaveHeight*240.0;
             z -= 1.0 * (sin((wPosition.z/3.0 + wPosition.x/8.0) * _WaveFrequency/10.0 - _T * _WaveSpeed * 2.1)) * _WaveHeight*350.0;
-            // z -= 1.0 * abs(sin((wPosition.z/8.0 + wPosition.x/2.0) * _WaveFrequency/200.0 - _T * _WaveSpeed * 1.2)) * _WaveHeight*100.0;
-            // z -= 1.0 * (sin((wPosition.z/8.0 + wPosition.x/10.0) * _WaveFrequency/10.0 - _T * _WaveSpeed * 4.2)) * _WaveHeight*200.0;
+            z -= 1.0 * abs(sin((wPosition.z/8.0 + wPosition.x/2.0) * _WaveFrequency/15.0 - _T * _WaveSpeed * 4.2)) * _WaveHeight*400.0;
+            z -= 1.0 * abs(sin((wPosition.z/2.0) * _WaveFrequency/10.0 + _T * _WaveSpeed * 1.2)) * _WaveHeight*500.0;
             // z -= 1.0 * abs(sin(wPosition.z * _WaveFrequency/30.0 - _T * _WaveSpeed * 2.5)) * _WaveHeight*300.0;
             // z -= 1.0 * abs(sin(wPosition.z * _WaveFrequency/15.0 - _T * _WaveSpeed * 1.5)) * _WaveHeight*158.0;
             // z -= 1.0 * abs(sin(wPosition.x * _WaveFrequency/40.0 - _T * _WaveSpeed * 3.5)) * _WaveHeight*200.0;
