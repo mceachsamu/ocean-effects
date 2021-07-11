@@ -64,7 +64,8 @@
         float _Phong;
         uniform float _MaxDistanceTess;
 
-        float4 tessDistance (appdata v0, appdata v1, appdata v2) {
+        float4 tessDistance (appdata v0, appdata v1, appdata v2)
+        {
             float minDist = 0.0;
             float maxDist = _MaxDistanceTess;
             float dist1 = v0.vertex - mul(unity_ObjectToWorld, _WorldSpaceCameraPos);
@@ -232,7 +233,6 @@
         uniform float _FakeDensityMult;
         uniform float _FrontLightingStrength;
 
-        uniform float _MaxHeight;
         uniform float _LightingOverall;
 
         inline half4 LightingWater (SurfaceOutputT s, half3 viewDir, UnityGI gi) {
