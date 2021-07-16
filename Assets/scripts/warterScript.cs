@@ -77,10 +77,10 @@ public class warterScript : MonoBehaviour
     public float NormalSearch = 0.01f;
 
     public GameObject water1;
-    public GameObject water2;
-    public GameObject water3;
-    public GameObject water4;
-    public GameObject water5;
+    // public GameObject water2;
+    // public GameObject water3;
+    // public GameObject water4;
+    // public GameObject water5;
 
     // Start is called before the first frame update
     void Start()
@@ -93,11 +93,6 @@ public class warterScript : MonoBehaviour
     {
         count+= 0.0005f;
         setShaderProperties(water1);
-        setShaderProperties(water2);
-        setShaderProperties(water3);
-        setShaderProperties(water4);
-        // setShaderProperties(water5);
-
     }
 
     public void setPos(Vector3 position) {

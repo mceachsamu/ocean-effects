@@ -3,7 +3,9 @@ Shader "Unlit/water-simple"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Tess ("Tessellation", Range(1,32)) = 4
+        _Tess ("Tessellation", Range(1, 64)) = 4
+		_TessellationEdgeLength ("Tessellation Edge Length", Range(0.01, 1)) = 50
+        _TessDistPow("tess distance power", Range(0.0, 5.0)) = 1.0
     }
     SubShader
     {
@@ -16,6 +18,7 @@ Shader "Unlit/water-simple"
 
             #pragma target 5.0
             #pragma require geometry
+            #pragma shader_feature _TESSELLATION_EDGE
 
             uniform float _WaveFrequency;
             uniform float _WaveSpeed;
@@ -39,6 +42,8 @@ Shader "Unlit/water-simple"
             uniform float _T;
 
             uniform float _Tess;
+            uniform float _TessellationEdgeLength;
+            uniform float _TessDistPow;
             
             sampler2D _MainTex;
             float4 _MainTex_ST;

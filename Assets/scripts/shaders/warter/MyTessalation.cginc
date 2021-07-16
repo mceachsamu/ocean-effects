@@ -28,12 +28,27 @@ TessellationControlPoint MyHullProgram (InputPatch<TessellationControlPoint, 3> 
     return patch[id];
 }
 
+float TessellationEdgeFactor (float3 p0, float3 p1) {
+	float edgeLength = distance(p0, p1);
+
+	float3 edgeCenter = (p0 + p1) * 0.5;
+	float viewDistance = pow(distance(edgeCenter, _WorldSpaceCameraPos), _TessDistPow);
+
+	return edgeLength * _ScreenParams.y / (_TessellationEdgeLength * viewDistance)/100.0;
+}
+
 TessellationFactors MyPatchConstantFunction (InputPatch<TessellationControlPoint, 3> patch) {
+	float tess = _Tess;
+
+	float3 p0 = mul(unity_ObjectToWorld, patch[0].vertex).xyz;
+	float3 p1 = mul(unity_ObjectToWorld, patch[1].vertex).xyz;
+	float3 p2 = mul(unity_ObjectToWorld, patch[2].vertex).xyz;
+
 	TessellationFactors f;
-    f.edge[0] = _Tess;
-    f.edge[1] = _Tess;
-    f.edge[2] = _Tess;
-	f.inside = _Tess;
+    f.edge[0] = TessellationEdgeFactor(p1, p2);
+    f.edge[1] = TessellationEdgeFactor(p2, p0);
+    f.edge[2] = TessellationEdgeFactor(p0, p1);
+	f.inside = (TessellationEdgeFactor(p1, p2) + TessellationEdgeFactor(p2, p0) + TessellationEdgeFactor(p0, p1)) * (1 / 3.0);
 
 	return f;
 }
@@ -53,7 +68,6 @@ vertOut MyDomainProgram (TessellationFactors factors, OutputPatch<appdata_tan, 3
 
     return vertexProgram(data);
 }
-
 
 TessellationControlPoint MyTessellationVertexProgram (appdata_tan v) {
     TessellationControlPoint p;

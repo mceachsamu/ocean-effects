@@ -30,6 +30,13 @@ float4 getBackLighting(float3 normal, float3 viewDir, float3 lightDir) {
     return backLighting * fakeDensity * _BacklightColor;
 }
 
+float4 getFrontLighting(float3 normal, float3 viewDir, float3 lightDir){
+    float frontDot = dot(normalize(viewDir), (lightDir - normal * _BackLightNormalStrength));
+    float frontLighting = pow(saturate(frontDot), _BackLightPower) * _BackLightStrength;
+
+    return frontLighting * _BacklightColor * _FrontLightingStrength;
+}
+
 float4 getLighting(float3 normal, float3 normalMapNormal, float3 viewDir)
 {
     // we want to combine the mesh normal and the normal map normal for specific lighting
@@ -47,12 +54,15 @@ float4 getLighting(float3 normal, float3 normalMapNormal, float3 viewDir)
 
     // float frontLighting = pow(saturate(dot(normalize(viewDir), (1.0 * lightDir - s.Normal * _BackLightNormalStrength))), _BackLightPower) * _BackLightStrength * depth;
 
+    float4 frontLighting = getFrontLighting(normal, viewDir, lightDir);
+
+
     float4 col = _AmbientColor;
     col += baseColor;
     col += specularColor;
     col += rimColor;
     col += backLighting;
-    // col += frontLighting * _BacklightColor * _FrontLightingStrength;
+    col += frontLighting * _BacklightColor * _FrontLightingStrength;
     // col.g -= (1.0 - s.Albedo.r) * 0.2;
     // col.r -= (1.0 - s.Albedo.r) * 0.2;
     return col * _LightingOverall;

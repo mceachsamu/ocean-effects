@@ -15,7 +15,6 @@ vertOut vertexProgram (appdata_tan v)
     
     float3 normal = getDistortedNormal(v.vertex, v.normal, _NormalSearch);
     o.normal = UnityObjectToWorldNormal(normal);
- 
 
     o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
     
