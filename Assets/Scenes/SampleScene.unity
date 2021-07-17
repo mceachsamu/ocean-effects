@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.45094734, g: 0.49930632, b: 0.5663043, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -270,13 +270,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
-  m_LocalRotation: {x: 0.05420897, y: -0.21393332, z: 0.8132142, w: 0.5384949}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 156.026, y: 531.045, z: 651.071}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &812204784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -290,11 +290,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dfb04e50e1f884927a53dc9f23dca4de, type: 3}
       propertyPath: m_LocalScale.x
-      value: 10382.283
+      value: 20382.28
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dfb04e50e1f884927a53dc9f23dca4de, type: 3}
       propertyPath: m_LocalScale.y
-      value: 10382.283
+      value: 20382.28
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dfb04e50e1f884927a53dc9f23dca4de, type: 3}
       propertyPath: m_LocalScale.z
@@ -447,8 +447,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802fbe535ccb54ce2a23534d60e550e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  water: {fileID: 0}
-  lift: 0.97
+  water: {fileID: 1638370494}
+  lift: 8.69
 --- !u!1 &1138244695
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,7 +777,7 @@ MonoBehaviour:
   wS3: 0.6
   wH3: 9000
   WaveFrequency: 400
-  WaveSpeed: 12
+  WaveSpeed: 5
   WaveHeight: 0.0001
   Color: {r: 0, g: 0, b: 0, a: 0}
   SpecColor: {r: 1, g: 1, b: 1, a: 0.5}
@@ -785,7 +785,7 @@ MonoBehaviour:
   AmbientColor: {r: 0, g: 0, b: 0, a: 0}
   RimColor: {r: 0.0473923, g: 0.59917647, b: 0.6698113, a: 0}
   BacklightColor: {r: 0.005339969, g: 0.3773585, b: 0.3664313, a: 0}
-  count: 0
+  count: 14.483355
   RimAmount: 1.97
   Glossiness: 50
   ShadingIntensity: 30
@@ -794,12 +794,12 @@ MonoBehaviour:
   NormalMapDisplacement: 1
   NormalScrollSpeed: 0.068
   TextureFrequency: 40
-  BackLightNormalStrength: 0.098
-  BackLightPower: 0.88
-  BackLightStrength: 4.67
-  DepthMultiplier: 5
-  FakeDensityMult: 1.34
-  FrontLightingStrength: 0.06
+  BackLightNormalStrength: 0.671
+  BackLightPower: 1.54
+  BackLightStrength: 2.22
+  DepthMultiplier: 2.74
+  FakeDensityMult: 1.71
+  FrontLightingStrength: 1
   LightingOverall: 1
-  NormalSearch: 0.001
+  NormalSearch: 0.0004
   water1: {fileID: 1638370494}

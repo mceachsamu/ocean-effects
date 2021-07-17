@@ -20,21 +20,25 @@ float4 getRimLighting(float3 normal, float3 viewDir) {
 }
 
 float4 getBackLighting(float3 normal, float3 viewDir, float3 lightDir) {
-    float backLightingDot = dot(viewDir, (-1.0 * lightDir - normal * _BackLightNormalStrength));
+    float backLightingDot = dot(viewDir, (-1.0 * (lightDir + normal * _BackLightNormalStrength)));
+    
+    // float backLightingDot = 1.0 - clamp(dot(normal, (-1.0 * lightDir)), 0.0, 1.0);
     float backLighting = pow(saturate(backLightingDot), _BackLightPower) * _BackLightStrength;
     
     //we want backlighting to be strongest at the point where the wave is facing horizontally
-    float fakeDensity = saturate(normal.z) * _FakeDensityMult;
+    float fakeDensity = saturate(saturate(normal.z))* _FakeDensityMult;
     //we call it fake density because its supposed to estimate the density/thickness of a wave
 
-    return backLighting * fakeDensity * _BacklightColor;
+    return backLighting * _BacklightColor * fakeDensity;
 }
 
 float4 getFrontLighting(float3 normal, float3 viewDir, float3 lightDir){
     float frontDot = dot(normalize(viewDir), (lightDir - normal * _BackLightNormalStrength));
     float frontLighting = pow(saturate(frontDot), _BackLightPower) * _BackLightStrength;
 
-    return frontLighting * _BacklightColor * _FrontLightingStrength;
+    float fakeDensity = saturate(normal.z) * _FakeDensityMult;
+
+    return frontLighting * _BacklightColor * _FrontLightingStrength * fakeDensity;
 }
 
 float4 getLighting(float3 normal, float3 normalMapNormal, float3 viewDir)
@@ -50,7 +54,7 @@ float4 getLighting(float3 normal, float3 normalMapNormal, float3 viewDir)
 
     float4 rimColor = getRimLighting(normal, viewDir);
 
-    float4 backLighting = getBackLighting(normal, viewDir, lightDir);
+    float4 backLighting = getBackLighting(normC, viewDir, lightDir);
 
     // float frontLighting = pow(saturate(dot(normalize(viewDir), (1.0 * lightDir - s.Normal * _BackLightNormalStrength))), _BackLightPower) * _BackLightStrength * depth;
 
@@ -62,7 +66,7 @@ float4 getLighting(float3 normal, float3 normalMapNormal, float3 viewDir)
     col += specularColor;
     col += rimColor;
     col += backLighting;
-    col += frontLighting * _BacklightColor * _FrontLightingStrength;
+    // col += frontLighting;
     // col.g -= (1.0 - s.Albedo.r) * 0.2;
     // col.r -= (1.0 - s.Albedo.r) * 0.2;
     return col * _LightingOverall;

@@ -4,7 +4,7 @@ Shader "Unlit/water-simple"
     {
         _MainTex ("Texture", 2D) = "white" {}
         _Tess ("Tessellation", Range(1, 64)) = 4
-		_TessellationEdgeLength ("Tessellation Edge Length", Range(0.01, 1)) = 50
+		_TessellationEdgeLength ("Tessellation Edge Length", Range(0.0, 0.01)) = 0.01
         _TessDistPow("tess distance power", Range(0.0, 5.0)) = 1.0
     }
     SubShader

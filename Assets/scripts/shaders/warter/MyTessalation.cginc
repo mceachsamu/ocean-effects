@@ -34,7 +34,13 @@ float TessellationEdgeFactor (float3 p0, float3 p1) {
 	float3 edgeCenter = (p0 + p1) * 0.5;
 	float viewDistance = pow(distance(edgeCenter, _WorldSpaceCameraPos), _TessDistPow);
 
-	return edgeLength * _ScreenParams.y / (_TessellationEdgeLength * viewDistance)/100.0;
+	float tess = edgeLength / (_TessellationEdgeLength * viewDistance)/100.0;
+
+	if (tess < 3.0) {
+		tess = 3.0;
+	}
+
+	return tess;
 }
 
 TessellationFactors MyPatchConstantFunction (InputPatch<TessellationControlPoint, 3> patch) {
