@@ -12,10 +12,10 @@ float4 getDistortion(float4 position) {
     
     // These waves are small and the cpu can ignore them
     z -= 1.0 * (sin((wPosition.z + wPosition.x/2.0) * _WaveFrequency/70.0 - _T * _WaveSpeed * 2.5)) * _WaveHeight*100.0;
-    z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x) * _WaveFrequency/30.0 - _T * _WaveSpeed * 4.5)) * _WaveHeight*140.0;
+    z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x) * _WaveFrequency/30.0 - _T * _WaveSpeed * 1.5)) * _WaveHeight*140.0;
     z -= 1.0 * (sin((wPosition.z/3.0 + wPosition.x/8.0) * _WaveFrequency/60.0 - _T * _WaveSpeed * 2.1)) * _WaveHeight*210.0;
-    z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x/2.0) * _WaveFrequency/50.0 - _T * _WaveSpeed * 3.2)) * _WaveHeight*180.0;
-    z -= 1.0 * abs(sin((wPosition.z/2.0) * _WaveFrequency/50.0 + _T * _WaveSpeed * 2.2)) * _WaveHeight*80.0;
+    z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x/2.0) * _WaveFrequency/50.0 - _T * _WaveSpeed * 1.2)) * _WaveHeight*180.0;
+    z -= 1.0 * abs(sin((wPosition.z/2.0) * _WaveFrequency/10.0 + _T * _WaveSpeed * 2.2)) * _WaveHeight*120.0;
     
 
     z += _WaveHeight;
