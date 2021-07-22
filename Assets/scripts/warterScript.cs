@@ -8,14 +8,20 @@ public class warterScript : MonoBehaviour
     public float wF1 = 600.0f;
     public float wS1 = 0.99f;
     public float wH1 = 1600.0f;
+
     public float wFX2 = 4.0f;
     public float wFZ2 = 3.0f;
     public float wF2 = 100.0f;
     public float wS2 = 0.6f;
     public float wH2 = 2000.0f;
+
     public float wF3 = 200.0f;
     public float wS3 = 0.6f;
     public float wH3 = 2000.0f;
+    
+    public float wF4 = 200.0f;
+    public float wS4 = 0.6f;
+    public float wH4 = 2000.0f;
 
     public float WaveFrequency = 210.0f;
 
@@ -113,6 +119,9 @@ public class warterScript : MonoBehaviour
         g.GetComponent<Renderer>().material.SetFloat("_wF3", wF3);
         g.GetComponent<Renderer>().material.SetFloat("_wS3", wS3);
         g.GetComponent<Renderer>().material.SetFloat("_wH3", wH3);
+        g.GetComponent<Renderer>().material.SetFloat("_wF4", wF4);
+        g.GetComponent<Renderer>().material.SetFloat("_wS4", wS4);
+        g.GetComponent<Renderer>().material.SetFloat("_wH4", wH4);
 
         g.GetComponent<Renderer>().material.SetFloat("_WaveFrequency", WaveFrequency);
         g.GetComponent<Renderer>().material.SetFloat("_WaveSpeed", WaveSpeed);

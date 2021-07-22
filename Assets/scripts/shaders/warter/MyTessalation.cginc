@@ -37,7 +37,7 @@ float TessellationEdgeFactor (float3 p0, float3 p1) {
 	float tess = edgeLength / (_TessellationEdgeLength * viewDistance)/100.0;
 
 	if (tess < 3.0) {
-		tess = 3.0;
+		tess = 2.0;
 	}
 
 	return tess;

@@ -776,9 +776,12 @@ MonoBehaviour:
   wF3: 2000
   wS3: 0.6
   wH3: 9000
+  wF4: 400
+  wS4: 0.6
+  wH4: 2000
   WaveFrequency: 400
   WaveSpeed: 5
-  WaveHeight: 0.0001
+  WaveHeight: 0.0002
   Color: {r: 0, g: 0, b: 0, a: 0}
   SpecColor: {r: 1, g: 1, b: 1, a: 0.5}
   SpecularColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
@@ -801,5 +804,5 @@ MonoBehaviour:
   FakeDensityMult: 1.71
   FrontLightingStrength: 1
   LightingOverall: 1
-  NormalSearch: 0.0004
+  NormalSearch: 0.00002
   water1: {fileID: 1638370494}

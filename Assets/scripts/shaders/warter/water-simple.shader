@@ -39,6 +39,10 @@ Shader "Unlit/water-simple"
             uniform float _wS3;
             uniform float _wH3;
 
+            uniform float _wF4;
+            uniform float _wS4;
+            uniform float _wH4;
+
             uniform float _T;
 
             uniform float _Tess;

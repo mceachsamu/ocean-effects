@@ -26,7 +26,7 @@ float4 getBackLighting(float3 normal, float3 viewDir, float3 lightDir) {
     float backLighting = pow(saturate(backLightingDot), _BackLightPower) * _BackLightStrength;
     
     //we want backlighting to be strongest at the point where the wave is facing horizontally
-    float fakeDensity = saturate(saturate(normal.z))* _FakeDensityMult;
+    float fakeDensity = saturate((normal.z)) * _FakeDensityMult;
     //we call it fake density because its supposed to estimate the density/thickness of a wave
 
     return backLighting * _BacklightColor * fakeDensity;

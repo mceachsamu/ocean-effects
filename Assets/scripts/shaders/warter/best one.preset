@@ -1,0 +1,263 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: best one
+  m_TargetType:
+    m_NativeTypeID: 114
+    m_ManagedTypePPtr: {fileID: 11500000, guid: ec6373fa078d5444b8a39d677dc4d11f, type: 3}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_Enabled
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorHideFlags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorClassIdentifier
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: wF1
+    value: 1000
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: wS1
+    value: 0.99
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: wH1
+    value: 1000
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: wFX2
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: wFZ2
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: wF2
+    value: 1000
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: wS2
+    value: 0.6
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: wH2
+    value: 8000
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: wF3
+    value: 2000
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: wS3
+    value: 0.6
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: wH3
+    value: 9000
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: wF4
+    value: 400
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: wS4
+    value: 0.6
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: wH4
+    value: 2000
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: WaveFrequency
+    value: 400
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: WaveSpeed
+    value: 5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: WaveHeight
+    value: 0.0002
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Color.r
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Color.g
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Color.b
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Color.a
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: SpecColor.r
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: SpecColor.g
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: SpecColor.b
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: SpecColor.a
+    value: 0.5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: SpecularColor.r
+    value: 0.5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: SpecularColor.g
+    value: 0.5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: SpecularColor.b
+    value: 0.5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: SpecularColor.a
+    value: 0.5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: AmbientColor.r
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: AmbientColor.g
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: AmbientColor.b
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: AmbientColor.a
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: RimColor.r
+    value: 0.0473923
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: RimColor.g
+    value: 0.59917647
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: RimColor.b
+    value: 0.6698113
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: RimColor.a
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: BacklightColor.r
+    value: 0.005339969
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: BacklightColor.g
+    value: 0.3773585
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: BacklightColor.b
+    value: 0.3664313
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: BacklightColor.a
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: count
+    value: 22.174627
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: RimAmount
+    value: 1.97
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: Glossiness
+    value: 50
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: ShadingIntensity
+    value: 30
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: NormalMapStrength
+    value: 0.05
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: NormalMapStrength2
+    value: 0.206
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: NormalMapDisplacement
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: NormalScrollSpeed
+    value: 0.068
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: TextureFrequency
+    value: 40
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: BackLightNormalStrength
+    value: 0.675
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: BackLightPower
+    value: 2.05
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: BackLightStrength
+    value: 1.28
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: DepthMultiplier
+    value: 2.74
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: FakeDensityMult
+    value: 1.71
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: FrontLightingStrength
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: LightingOverall
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: NormalSearch
+    value: 0.00002
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: water1
+    value: 
+    objectReference: {fileID: 0}
+  m_ExcludedProperties: []
