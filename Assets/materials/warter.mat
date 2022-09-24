@@ -121,7 +121,9 @@ Material:
     - _TextureSize: 100
     - _UVSec: 0
     - _WaveFrequency: 210
+    - _WaveFrequencySmall: 2.63
     - _WaveHeight: 0.00005
+    - _WaveHeight2: 0.00015
     - _WaveSpeed: 24.7
     - _ZWrite: 1
     m_Colors:
