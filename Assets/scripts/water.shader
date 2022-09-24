@@ -4,7 +4,6 @@
         _Tess ("Tessellation", Range(1,32)) = 4
         _Phong ("phong", Range(0,1)) = 0.5
         _MaxDistanceTess("mex tes distance", Range(0, 2000)) = 100
-        _MainTex ("Base (RGB)", 2D) = "white" {}
         _UnderWaterTex ("Base (RGB)", 2D) = "white" {}
         _NoiseTexture ("Noise map", 2D) = "white" {}
         _NoiseTexture2 ("Noise map 2", 2D) = "white" {}
@@ -142,12 +141,12 @@
             // z -= 1.0 * (sin((wPosition.z/6.0 - wPosition.x/2.0) * _WaveFrequency/1000.0 + _T * _WaveSpeed*0.6)) * _WaveHeight*1000.0;
             // z -= 1.0 * (sin((wPosition.z/6.0 - wPosition.x/2.0) * _WaveFrequency/1500.0 - _T * _WaveSpeed*0.9)) * _WaveHeight*7000.0;
             
-            // z -= 1.0 * (sin((wPosition.z) * _WaveFrequency/40.0 + _T * _WaveSpeed*2.4)) * _WaveHeight*430.1;
-            z -= 1.0 * abs(sin((wPosition.z + wPosition.x/24.0) * _WaveFrequency/50.0 - _T * _WaveSpeed * 3.5)) * _WaveHeight*240.0;
-            z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x) * _WaveFrequency/100.0 - _T * _WaveSpeed * 1.5)) * _WaveHeight*240.0;
-            z -= 1.0 * (sin((wPosition.z/3.0 + wPosition.x/8.0) * _WaveFrequency/10.0 - _T * _WaveSpeed * 2.1)) * _WaveHeight*350.0;
-            z -= 1.0 * abs(sin((wPosition.z/8.0 + wPosition.x/2.0) * _WaveFrequency/15.0 - _T * _WaveSpeed * 4.2)) * _WaveHeight*400.0;
-            z -= 1.0 * abs(sin((wPosition.z/2.0) * _WaveFrequency/10.0 + _T * _WaveSpeed * 1.2)) * _WaveHeight*500.0;
+            z -= 1.0 * (sin((wPosition.z) * _WaveFrequency/40.0 + _T * _WaveSpeed*2.4)) * _WaveHeight*230.1;
+            z -= 1.0 * abs(sin((wPosition.z + wPosition.x/24.0) * _WaveFrequency/50.0 - _T * _WaveSpeed * 3.5)) * _WaveHeight*140.0;
+            z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x) * _WaveFrequency/100.0 - _T * _WaveSpeed * 1.5)) * _WaveHeight*140.0;
+            z -= 1.0 * (sin((wPosition.z/3.0 + wPosition.x/8.0) * _WaveFrequency/10.0 - _T * _WaveSpeed * 2.1)) * _WaveHeight*150.0;
+            z -= 1.0 * abs(sin((wPosition.z/8.0 + wPosition.x/2.0) * _WaveFrequency/15.0 - _T * _WaveSpeed * 4.2)) * _WaveHeight*100.0;
+            // z -= 1.0 * abs(sin((wPosition.z/2.0) * _WaveFrequency/10.0 + _T * _WaveSpeed * 1.2)) * _WaveHeight*500.0;
             // z -= 1.0 * abs(sin(wPosition.z * _WaveFrequency/30.0 - _T * _WaveSpeed * 2.5)) * _WaveHeight*300.0;
             // z -= 1.0 * abs(sin(wPosition.z * _WaveFrequency/15.0 - _T * _WaveSpeed * 1.5)) * _WaveHeight*158.0;
             // z -= 1.0 * abs(sin(wPosition.x * _WaveFrequency/40.0 - _T * _WaveSpeed * 3.5)) * _WaveHeight*200.0;
@@ -209,7 +208,6 @@
             fixed Alpha;    // alpha for transparencies
         };
         
-        sampler2D _MainTex;
         sampler2D _NormalMap;
         sampler2D _CameraDepthTexture;
         sampler2D _UnderWaterTex;
