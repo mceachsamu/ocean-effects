@@ -21,7 +21,6 @@ struct TessellationControlPoint {
 [UNITY_domain("tri")]
 [UNITY_outputcontrolpoints(3)]
 [UNITY_outputtopology("triangle_cw")]
-// [UNITY_partitioning("integer")]
 [UNITY_partitioning("fractional_odd")]
 [UNITY_patchconstantfunc("MyPatchConstantFunction")]
 TessellationControlPoint MyHullProgram (InputPatch<TessellationControlPoint, 3> patch, uint id : SV_OutputControlPointID) {
@@ -37,7 +36,7 @@ float TessellationEdgeFactor (float3 p0, float3 p1) {
 	float tess = edgeLength / (_TessellationEdgeLength * viewDistance)/100.0;
 
 	if (tess < 3.0) {
-		tess = 2.0;
+		tess = 7.0;
 	}
 
 	return tess;

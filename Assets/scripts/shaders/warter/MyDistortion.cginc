@@ -11,11 +11,17 @@ float4 getDistortion(float4 position) {
     z -= 1.0 * abs(sin(wPosition.z * _WaveFrequency/_wF4 - _T * _WaveSpeed*_wS4)) * _WaveHeight*_wH4;
     
     // These waves are small and the cpu can ignore them
-    z -= 1.0 * (sin((wPosition.z + wPosition.x/2.0) * _WaveFrequency/70.0 - _T * _WaveSpeed * 2.5)) * _WaveHeight*100.0;
-    z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x) * _WaveFrequency/30.0 - _T * _WaveSpeed * 1.5)) * _WaveHeight*140.0;
-    z -= 1.0 * (sin((wPosition.z/3.0 + wPosition.x/8.0) * _WaveFrequency/60.0 - _T * _WaveSpeed * 2.1)) * _WaveHeight*210.0;
-    z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x/2.0) * _WaveFrequency/50.0 - _T * _WaveSpeed * 1.2)) * _WaveHeight*180.0;
-    z -= 1.0 * abs(sin((wPosition.z/2.0) * _WaveFrequency/10.0 + _T * _WaveSpeed * 2.2)) * _WaveHeight*120.0;
+    z -= 1.0 * (sin((wPosition.z + wPosition.x/2.0) * _WaveFrequency/25.0 * _WaveFrequencySmall - _T * _WaveSpeed * 2.5)) * _WaveHeight2*100.0;
+    z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x) * _WaveFrequency/10.0 * _WaveFrequencySmall - _T * _WaveSpeed * 3.5)) * _WaveHeight2*140.0;
+    z -= 1.0 * (sin((wPosition.z/3.0 + wPosition.x/8.0) * _WaveFrequency/30.0 * _WaveFrequencySmall - _T * _WaveSpeed * 2.1)) * _WaveHeight2*210.0;
+    z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x/2.0) * _WaveFrequency/20.0 * _WaveFrequencySmall - _T * _WaveSpeed * 2.2)) * _WaveHeight2*180.0;
+    z -= 1.0 * abs(sin((wPosition.z/2.0) * _WaveFrequency/10.0 * _WaveFrequencySmall + _T * _WaveSpeed * 2.2)) * _WaveHeight2*120.0;
+    
+    z -= 1.0 * (sin((wPosition.z + wPosition.x/2.0) * _WaveFrequency/30.0 * _WaveFrequencySmall+ _T * _WaveSpeed * 2.3)) * _WaveHeight2*100.0;
+    z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x) * _WaveFrequency/21.0 * _WaveFrequencySmall + _T * _WaveSpeed * 3.1)) * _WaveHeight2*140.0;
+    z -= 1.0 * (sin((wPosition.z/3.0 + wPosition.x/8.0) * _WaveFrequency/24.0 * _WaveFrequencySmall + _T * _WaveSpeed * 2.6)) * _WaveHeight2*210.0;
+    z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x/2.0) * _WaveFrequency/32.0 * _WaveFrequencySmall + _T * _WaveSpeed * 2.8)) * _WaveHeight2*180.0;
+    z -= 1.0 * abs(sin((wPosition.z/2.0) * _WaveFrequency/18.0 * _WaveFrequencySmall - _T * _WaveSpeed * 1.5)) * _WaveHeight2*120.0;
     
 
     z += _WaveHeight;

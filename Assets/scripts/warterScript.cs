@@ -102,9 +102,9 @@ public class warterScript : MonoBehaviour
     }
 
     public void setPos(Vector3 position) {
-        Vector3 pos = this.transform.position;
-        pos.z = position.z;
-        this.transform.position = pos;
+        // Vector3 pos = this.transform.position;
+        // pos.z = position.z;
+        // this.transform.position = pos;
     }
 
     public void setShaderProperties(GameObject g) {
@@ -160,7 +160,7 @@ public class warterScript : MonoBehaviour
         height -= 1.0f * (Mathf.Sin(pos.x * WaveFrequency/wF1 + time * WaveSpeed*wS1)) * WaveHeight*wH1;
         height -= 1.0f * (Mathf.Sin((pos.z/wFZ2 - pos.x/wFX2) * WaveFrequency/wF2 + time * WaveSpeed*wS2)) * WaveHeight * wH2;
         height -= 1.0f * Mathf.Abs(Mathf.Sin(pos.z * WaveFrequency/wF3 + time * WaveSpeed*wS3)) * WaveHeight*wH3;
-        height -= 1.0f * Mathf.Abs(Mathf.Sin(pos.z * WaveFrequency/wF4 + time * WaveSpeed*wS4)) * WaveHeight*wH4;
+        height -= 1.0f * Mathf.Abs(Mathf.Sin(pos.z * WaveFrequency/wF4 - time * WaveSpeed*wS4)) * WaveHeight*wH4;
         return height;
     }
 }

@@ -61,6 +61,7 @@ float4 getLighting(float3 normal, float3 normalMapNormal, float3 viewDir)
     float4 frontLighting = getFrontLighting(normal, viewDir, lightDir);
 
 
+
     float4 col = _AmbientColor;
     col += baseColor;
     col += specularColor;
