@@ -544,11 +544,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dfb04e50e1f884927a53dc9f23dca4de, type: 3}
       propertyPath: m_LocalScale.x
-      value: 20382.28
+      value: 40382.28
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dfb04e50e1f884927a53dc9f23dca4de, type: 3}
       propertyPath: m_LocalScale.y
-      value: 20382.28
+      value: 40382.28
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dfb04e50e1f884927a53dc9f23dca4de, type: 3}
       propertyPath: m_LocalScale.z
@@ -1373,13 +1373,13 @@ MonoBehaviour:
   wF4: 400
   wS4: 0.6
   wH4: 2000
-  WaveFrequency: 50
+  WaveFrequency: 100
   WaveSpeed: 14
   WaveHeight: 0.0009
   Color: {r: 0, g: 0, b: 0, a: 0}
   SpecColor: {r: 1, g: 1, b: 1, a: 0.5}
   SpecularColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
-  AmbientColor: {r: 0, g: 0, b: 0, a: 0}
+  AmbientColor: {r: 0.14128695, g: 0.2327987, b: 0.23584908, a: 0}
   RimColor: {r: 0.0473923, g: 0.59917647, b: 0.6698113, a: 0}
   BacklightColor: {r: 0.005339969, g: 0.3773585, b: 0.3664313, a: 0}
   count: 22.174627
@@ -1397,6 +1397,6 @@ MonoBehaviour:
   DepthMultiplier: 2.74
   FakeDensityMult: 1.71
   FrontLightingStrength: 1
-  LightingOverall: 1
-  NormalSearch: 0.0001
+  LightingOverall: 0.914
+  NormalSearch: 0.00005
   water1: {fileID: 1638370494}
