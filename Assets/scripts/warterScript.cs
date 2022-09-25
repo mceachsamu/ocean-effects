@@ -24,10 +24,15 @@ public class warterScript : MonoBehaviour
     public float wH4 = 2000.0f;
 
     public float WaveFrequency = 210.0f;
+    public float WaveFrequencySmall = 210.0f;
+
 
     public float WaveSpeed = 24.7f;
+    
+    public float SmallWaveSpeed = 24.7f;
 
     public float WaveHeight = 0.0005f;
+    public float WaveHeight2 = 0.0005f;
     public Color Color = new Color(1.0f * 255.0f,1.0f * 255.0f,1.0f * 255.0f,0.0f * 255.0f);
     public Color SpecColor = new Color(0.5f * 255.0f,0.5f * 255.0f,0.5f * 255.0f,0.5f * 255.0f);
     public Color SpecularColor = new Color(0.5f * 255.0f,0.5f * 255.0f,0.5f * 255.0f,0.5f * 255.0f);
@@ -124,8 +129,11 @@ public class warterScript : MonoBehaviour
         g.GetComponent<Renderer>().material.SetFloat("_wH4", wH4);
 
         g.GetComponent<Renderer>().material.SetFloat("_WaveFrequency", WaveFrequency);
+        g.GetComponent<Renderer>().material.SetFloat("_WaveFrequencySmall", WaveFrequencySmall);
         g.GetComponent<Renderer>().material.SetFloat("_WaveSpeed", WaveSpeed);
+        g.GetComponent<Renderer>().material.SetFloat("_SmallWaveSpeed", SmallWaveSpeed);
         g.GetComponent<Renderer>().material.SetFloat("_WaveHeight", WaveHeight);
+        g.GetComponent<Renderer>().material.SetFloat("_WaveHeight2", WaveHeight2);
 
         g.GetComponent<Renderer>().material.SetFloat("_T", count);
 

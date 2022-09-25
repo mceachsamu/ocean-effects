@@ -68,7 +68,5 @@ float4 getLighting(float3 normal, float3 normalMapNormal, float3 viewDir)
     col += rimColor;
     col += backLighting;
     // col += frontLighting;
-    // col.g -= (1.0 - s.Albedo.r) * 0.2;
-    // col.r -= (1.0 - s.Albedo.r) * 0.2;
     return col * _LightingOverall;
 }

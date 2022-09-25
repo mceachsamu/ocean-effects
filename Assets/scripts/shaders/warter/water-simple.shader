@@ -25,6 +25,7 @@ Shader "Unlit/water-simple"
             uniform float _WaveFrequency;
             uniform float _WaveFrequencySmall;
             uniform float _WaveSpeed;
+            uniform float _SmallWaveSpeed;
             uniform float _WaveHeight;
             uniform float _WaveHeight2;
 
