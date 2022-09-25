@@ -1,21 +1,38 @@
 
 float4 getDistortion(float4 position) {
     float4 wPosition = mul (unity_ObjectToWorld, position);
-    float time = _T * _WaveSpeed;
 
     float z = 0.0;
-    // These waves are much larger must use constants so that we can track them in the cpu
-    z -= 1.0 * (sin(wPosition.x * _WaveFrequency/_wF1 + _T * _WaveSpeed*_wS1)) * _WaveHeight*_wH1;
-    z -= 1.0 * (sin((wPosition.z/_wFZ2 - wPosition.x/_wFX2) * _WaveFrequency/_wF2 + _T * _WaveSpeed*_wS2)) * _WaveHeight* _wH2;
-    z -= 1.0 * abs(sin(wPosition.z * _WaveFrequency/_wF3 + _T * _WaveSpeed*_wS3)) * _WaveHeight*_wH3;
-    z -= 1.0 * abs(sin(wPosition.z * _WaveFrequency/_wF4 - _T * _WaveSpeed*_wS4)) * _WaveHeight*_wH4;
+    for (int i = 0; i < _NumFunctions; i++) {
+        // unwrap matrix into functions
+        float amplitude = _WaveFunctions[i][0][0];
+        float useAbs = _WaveFunctions[i][0][1];
+        float modifier = _WaveFunctions[i][0][2];
+        float frequency = _WaveFunctions[i][0][3];
+
+        float speed = _WaveFunctions[i][1][0];
+        float propX = _WaveFunctions[i][1][1];
+        float propZ = _WaveFunctions[i][1][2];
+
+        float input = (wPosition.x * propX + wPosition.z * propZ) * _WaveFrequency/frequency + _T * _WaveSpeed * speed;
     
-    // These waves are small and the cpu can ignore them
-    z -= 1.0 * (sin((wPosition.z + wPosition.x/2.0) * _WaveFrequency/25.0 * _WaveFrequencySmall - _T * _SmallWaveSpeed * 2.5)) * _WaveHeight2*100.0;
-    z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x) * _WaveFrequency/10.0 * _WaveFrequencySmall - _T * _SmallWaveSpeed * 3.5)) * _WaveHeight2*140.0;
-    z -= 1.0 * (sin((wPosition.z/3.0 + wPosition.x/8.0) * _WaveFrequency/30.0 * _WaveFrequencySmall - _T * _SmallWaveSpeed * 2.1)) * _WaveHeight2*210.0;
-    z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x/2.0) * _WaveFrequency/20.0 * _WaveFrequencySmall - _T * _SmallWaveSpeed * 2.2)) * _WaveHeight2*180.0;
-    z -= 1.0 * abs(sin((wPosition.z/2.0) * _WaveFrequency/10.0 * _WaveFrequencySmall + _T * _SmallWaveSpeed * 2.2)) * _WaveHeight2*120.0;
+        // use cosine
+        if (modifier == 0.0) {
+            input = cos(input);
+        }
+        // use sine
+        if (modifier == 1.0) {
+            input = sin(input);
+        }
+
+        // use absolute value
+        if (useAbs == 1.0) {
+            input = abs(input);
+        }
+
+        input = input * _WaveHeight * amplitude;
+        z += input;
+    }
     
     z -= 1.0 * (sin((wPosition.z + wPosition.x/2.0) * _WaveFrequency/30.0 * _WaveFrequencySmall+ _T * _SmallWaveSpeed * 2.3)) * _WaveHeight2*120.0;
     z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x) * _WaveFrequency/21.0 * _WaveFrequencySmall + _T * _SmallWaveSpeed * 3.1)) * _WaveHeight2*50.0;
@@ -23,7 +40,6 @@ float4 getDistortion(float4 position) {
     z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x/2.0) * _WaveFrequency/32.0 * _WaveFrequencySmall + _T * _SmallWaveSpeed * 2.8)) * _WaveHeight2*70.0;
     z -= 1.0 * abs(sin((wPosition.z/2.0) * _WaveFrequency/48.0 * _WaveFrequencySmall - _T * _SmallWaveSpeed * 1.5)) * _WaveHeight2*120.0;
     
-
     z += _WaveHeight;
     wPosition.y += z;
     position = mul(unity_WorldToObject, wPosition);

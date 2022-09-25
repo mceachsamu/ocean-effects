@@ -26,26 +26,11 @@ Shader "Unlit/water-simple"
             uniform float _SmallWaveSpeed;
             uniform float _WaveHeight;
             uniform float _WaveHeight2;
+            uniform int _NumFunctions;
+
+            uniform float4x4 _WaveFunctions[10];
 
             uniform float _NormalSearch;
-
-            uniform float _wF1;
-            uniform float _wS1;
-            uniform float _wH1;
-
-            uniform float _wFX2;
-            uniform float _wFZ2;
-            uniform float _wF2;
-            uniform float _wS2;
-            uniform float _wH2;
-
-            uniform float _wF3;
-            uniform float _wS3;
-            uniform float _wH3;
-
-            uniform float _wF4;
-            uniform float _wS4;
-            uniform float _wH4;
 
             uniform float _T;
 
