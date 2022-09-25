@@ -21,7 +21,7 @@ float4 getDistortion(float4 position) {
     z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x) * _WaveFrequency/21.0 * _WaveFrequencySmall + _T * _SmallWaveSpeed * 3.1)) * _WaveHeight2*50.0;
     z -= 1.0 * (sin((wPosition.z/3.0 + wPosition.x/8.0) * _WaveFrequency/24.0 * _WaveFrequencySmall + _T * _SmallWaveSpeed * 2.6)) * _WaveHeight2*145.0;
     z -= 1.0 * abs(sin((wPosition.z/3.0 + wPosition.x/2.0) * _WaveFrequency/32.0 * _WaveFrequencySmall + _T * _SmallWaveSpeed * 2.8)) * _WaveHeight2*70.0;
-    z -= 1.0 * abs(sin((wPosition.z/2.0) * _WaveFrequency/18.0 * _WaveFrequencySmall - _T * _SmallWaveSpeed * 1.5)) * _WaveHeight2*120.0;
+    z -= 1.0 * abs(sin((wPosition.z/2.0) * _WaveFrequency/48.0 * _WaveFrequencySmall - _T * _SmallWaveSpeed * 1.5)) * _WaveHeight2*120.0;
     
 
     z += _WaveHeight;

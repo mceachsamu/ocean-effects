@@ -115,7 +115,7 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Tess: 1
-    - _TessDistPow: 2.04
+    - _TessDistPow: 1.48
     - _TessellationEdgeLength: 0.00001
     - _TextureFrequency: 40
     - _TextureSize: 100
