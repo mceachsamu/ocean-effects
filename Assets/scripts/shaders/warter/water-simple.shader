@@ -4,7 +4,7 @@ Shader "Unlit/water-simple"
     {
         _MainTex ("Texture", 2D) = "white" {}
         _Tess ("Tessellation", Range(1, 64)) = 4
-		_TessellationEdgeLength ("Tessellation Edge Length", Range(0.0, 0.01)) = 0.01
+		_TessellationEdgeLength ("Tessellation Edge Length", Range(0.0, 0.0001)) = 0.01
         _TessDistPow("tess distance power", Range(0.0, 5.0)) = 1.0
     }
     SubShader
@@ -28,7 +28,7 @@ Shader "Unlit/water-simple"
             uniform float _WaveHeight2;
             uniform int _NumFunctions;
 
-            uniform float4x4 _WaveFunctions[10];
+            uniform float4x4 _WaveFunctions[20];
 
             uniform float _NormalSearch;
 
@@ -83,7 +83,7 @@ Shader "Unlit/water-simple"
             fixed4 frag (vertOut i) : SV_Target
             {
                 // sample the texture
-                fixed4 col = getLighting(normalize(i.normal), normalize(i.normal), i.viewDir);
+                fixed4 col = getLighting(normalize(i.normal), normalize(i.normal), normalize(i.viewDir));
                 return col;
             }
             ENDCG
