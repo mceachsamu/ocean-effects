@@ -4,7 +4,9 @@
 #endif
 
 #include "UnityCG.cginc"
-// #include "MyVertex.cginc"
+uniform float _Tess;
+uniform float _TessellationEdgeLength;
+uniform float _TessDistPow;
 
 struct TessellationFactors {
     float edge[3] : SV_TessFactor;

@@ -1,3 +1,12 @@
+uniform float _WaveFrequency;
+uniform float _WaveFrequencySmall;
+uniform float _WaveSpeed;
+uniform float _SmallWaveSpeed;
+uniform float _WaveHeight;
+uniform float _WaveHeight2;
+uniform int _NumFunctions;
+uniform float _T;
+uniform float4x4 _WaveFunctions[20];
 
 float4 getDistortion(float4 position) {
     float4 wPosition = mul (unity_ObjectToWorld, position);
