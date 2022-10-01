@@ -18,5 +18,7 @@ public class underwater : MonoBehaviour
     {
         float height = warter.GetComponent<warterScript>().getHeight(this.transform.position);
         this.GetComponent<Renderer>().material.SetFloat("_WaterLevel", height);
+        
+        warter.GetComponent<warterScript>().SetWaveDistortionProperties(gameObject);
     }
 }

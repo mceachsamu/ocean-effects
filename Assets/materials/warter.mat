@@ -79,6 +79,10 @@ Material:
         m_Texture: {fileID: 8400000, guid: 3569385fd29134d8abcac8b7ec1ef850, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _UnderWaterTexture:
+        m_Texture: {fileID: 8400000, guid: 3569385fd29134d8abcac8b7ec1ef850, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BackLightNormalStrength: 0.121
     - _BackLightPower: 0.88
@@ -115,8 +119,8 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Tess: 1
-    - _TessDistPow: 1.53
-    - _TessellationEdgeLength: 0.000015
+    - _TessDistPow: 1.71
+    - _TessellationEdgeLength: 0.0000149
     - _TextureFrequency: 40
     - _TextureSize: 100
     - _UVSec: 0

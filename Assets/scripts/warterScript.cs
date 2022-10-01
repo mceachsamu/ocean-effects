@@ -67,9 +67,17 @@ public class warterScript : MonoBehaviour
     [Range(0.0f, 1.0f)]
     public float LightingOverall = 1.0f;
 
+    [Range(0.0f, 1.0f)]
+    public float UnderWaterIntensity = 1.0f;
+
+    [Range(0.0f, 1.0f)]
+    public float UnderWaterDistortion = 1.0f;
+
     public float NormalSearch = 0.01f;
 
     public GameObject water1;
+
+    private Matrix4x4[] waveData = new Matrix4x4[1];
 
     // Start is called before the first frame update
     void Start()
@@ -81,8 +89,8 @@ public class warterScript : MonoBehaviour
     void Update()
     {
         count+= 0.0005f;
-        Matrix4x4[] waveData = WaveFunctionsToMatrixArray(waveFunctionObjects);
-        setShaderProperties(water1, waveData);
+        waveData = WaveFunctionsToMatrixArray(waveFunctionObjects);
+        setShaderProperties(water1);
     }
 
     private Matrix4x4[] WaveFunctionsToMatrixArray(GameObject[] waveFunctions) {
@@ -94,18 +102,9 @@ public class warterScript : MonoBehaviour
         return waveData;
     }
 
-    private void setShaderProperties(GameObject g, Matrix4x4[] waveData) {
-        g.GetComponent<Renderer>().material.SetMatrixArray("_WaveFunctions", waveData);
-        g.GetComponent<Renderer>().material.SetInt("_NumFunctions", waveData.Length);
+    private void setShaderProperties(GameObject g) {
 
-        g.GetComponent<Renderer>().material.SetFloat("_WaveFrequency", WaveFrequency);
-        g.GetComponent<Renderer>().material.SetFloat("_WaveFrequencySmall", WaveFrequencySmall);
-        g.GetComponent<Renderer>().material.SetFloat("_WaveSpeed", WaveSpeed);
-        g.GetComponent<Renderer>().material.SetFloat("_SmallWaveSpeed", SmallWaveSpeed);
-        g.GetComponent<Renderer>().material.SetFloat("_WaveHeight", WaveHeight);
-        g.GetComponent<Renderer>().material.SetFloat("_WaveHeight2", WaveHeight2);
-
-        g.GetComponent<Renderer>().material.SetFloat("_T", count);
+        SetWaveDistortionProperties(g);
 
         g.GetComponent<Renderer>().material.SetFloat("_RimAmount", RimAmount);
         g.GetComponent<Renderer>().material.SetFloat("_Glossiness", Glossiness);
@@ -123,6 +122,8 @@ public class warterScript : MonoBehaviour
         g.GetComponent<Renderer>().material.SetFloat("_FrontLightingStrength", FrontLightingStrength);
         g.GetComponent<Renderer>().material.SetFloat("_NormalSearch", NormalSearch);
         g.GetComponent<Renderer>().material.SetFloat("_LightingOverall", LightingOverall);
+        g.GetComponent<Renderer>().material.SetFloat("_UnderWaterIntensity", UnderWaterIntensity);
+        g.GetComponent<Renderer>().material.SetFloat("_UnderWaterDistortion", UnderWaterDistortion);
 
         g.GetComponent<Renderer>().material.SetVector("_Color", Color);
         g.GetComponent<Renderer>().material.SetVector("_SpecColor", SpecColor);
@@ -130,6 +131,21 @@ public class warterScript : MonoBehaviour
         g.GetComponent<Renderer>().material.SetVector("_AmbientColor", AmbientColor);
         g.GetComponent<Renderer>().material.SetVector("_RimColor", RimColor);
         g.GetComponent<Renderer>().material.SetVector("_BacklightColor", BacklightColor);
+    }
+
+    public void SetWaveDistortionProperties(GameObject g) {
+        Material material = g.GetComponent<Renderer>().material;
+        material.SetMatrixArray("_WaveFunctions", waveData);
+        material.SetInt("_NumFunctions", waveData.Length);
+
+        material.SetFloat("_WaveFrequency", WaveFrequency);
+        material.SetFloat("_WaveFrequencySmall", WaveFrequencySmall);
+        material.SetFloat("_WaveSpeed", WaveSpeed);
+        material.SetFloat("_SmallWaveSpeed", SmallWaveSpeed);
+        material.SetFloat("_WaveHeight", WaveHeight);
+        material.SetFloat("_WaveHeight2", WaveHeight2);
+
+        material.SetFloat("_T", count);
     }
 
     public float getHeight(Vector3 pos) {

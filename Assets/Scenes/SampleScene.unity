@@ -1228,7 +1228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d678e5cd75b1c4663806f9fb0d5638dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shader: {fileID: 4800000, guid: 727248efe3ac34f59acfc5c7e3e84a78, type: 3}
+  shader: {fileID: 4800000, guid: 75769903f8a4c844ca399e656fe089ec, type: 3}
 --- !u!114 &1138244700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1264,7 +1264,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
-  antialiasingMode: 0
+  antialiasingMode: 2
   temporalAntialiasing:
     jitterSpread: 0.75
     sharpness: 0.25
@@ -1662,7 +1662,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7569caea8d18e494c930b01322fc71dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amplitude: 50000
+  amplitude: 10000
   isAbs: 0
   modifier: 0
   frequency: 50000
@@ -1930,7 +1930,7 @@ MonoBehaviour:
   WaveFrequencySmall: 2
   WaveSpeed: 7
   SmallWaveSpeed: 40
-  WaveHeight: 0.00015
+  WaveHeight: 0.00025
   WaveHeight2: 0.0004
   Color: {r: 0, g: 0.3948321, b: 0.49056602, a: 0}
   SpecColor: {r: 1, g: 1, b: 1, a: 0.5}
@@ -1954,6 +1954,8 @@ MonoBehaviour:
   FakeDensityMult: 2.24
   FrontLightingStrength: 1
   LightingOverall: 0.914
+  UnderWaterIntensity: 0.223
+  UnderWaterDistortion: 0.239
   NormalSearch: 0.00005
   water1: {fileID: 1638370494}
 --- !u!1 &1779292199
