@@ -1,25 +1,20 @@
 uniform fixed4 _Color;
 uniform fixed4 _AmbientColor;
 uniform fixed4 _SpecularColor;
+uniform fixed4 _BacklightColor;
 uniform fixed4 _RimColor;
+
 uniform float _RimAmount;
 uniform float _Glossiness;
 uniform float _ShadingIntensity;
-
-uniform float _NormalMapStrength;
-uniform float _NormalMapStrength2;
-
 uniform float _BackLightNormalStrength;
 uniform float _BackLightPower;
 uniform float _BackLightStrength;
-uniform fixed4 _BacklightColor;
-uniform float _DepthMultiplier;
 uniform float _FakeDensityMult;
 uniform float _LightingOverall;
 
 float4 getBaseLighting(float3 normC, float3 normal, float3 lightDir) {
     float NdotL = saturate(dot(normC , lightDir));
-    float troughEmphisis = saturate((1.0 - (normalize(normal).z))) * _DepthMultiplier;
 
     return NdotL * _Color;
 }
@@ -51,11 +46,11 @@ float4 getBackLighting(float3 normal, float3 viewDir, float3 lightDir) {
     return _BacklightColor * fakeDensity * backLighting;
 }
 
-float4 getLighting(float3 normal, float3 normalMapNormal, float3 viewDir, float4 screenPos)
+float4 getLighting(float3 normal, float3 viewDir)
 {
     // we want to combine the mesh normal and the normal map normal for specific lighting
     float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
-    float3 normC = normalize((normal + normalMapNormal)/2.0);
+    float3 normC = normalize(normal);
     float4 baseColor = getBaseLighting(normC, normal, lightDir);
     float4 specularColor = getSpecularLighting(lightDir, normC, viewDir);
     float4 rimColor = getRimLighting(normal, viewDir);

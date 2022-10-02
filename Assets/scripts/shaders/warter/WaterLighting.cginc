@@ -6,11 +6,14 @@ sampler2D _UnderWaterTexture;
 float4 _UnderWaterTexture_ST;
 
 float4 getUnderWater(float4 screenPos, float3 normal){
-    float2 renderTexUV = float2(screenPos.x + _UnderWaterDistortion * normal.y - _UnderWaterDistortion, screenPos.y + _UnderWaterDistortion * normal.y - _UnderWaterDistortion) / screenPos.w;
+    float uvx = screenPos.x;// + _UnderWaterDistortion * normal.y - _UnderWaterDistortion / 1.0;
+    float uvy = screenPos.y + _UnderWaterDistortion * normal.y - 0.1;
+    float2 renderTexUV = float2(uvx, uvy) / screenPos.w;
     float4 underwater = tex2D(_UnderWaterTexture, renderTexUV);
+    float fakeDensity = saturate((1.0 - normal.y)) * _FakeDensityMult;
 
     // the alpha channel is the strength of the water color
-    return underwater * underwater.a;
+    return underwater * _UnderWaterIntensity * underwater.a * fakeDensity;//underwater * underwater.a * _UnderWaterIntensity;
 }
 
 float4 getWaterLighting(float3 normal, float3 normalMapNormal, float3 viewDir, float4 screenPos)

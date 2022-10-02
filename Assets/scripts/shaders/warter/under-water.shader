@@ -22,9 +22,14 @@ Shader "Unlit/under-water"
             {
                 float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
+                float3 normal : NORMAL;
                 float4 worldPosition : TEXCOORD1;
                 float waveHeight : TEXCOORD2;
+                float3 viewDir : TEXCOORD3;
             };
+
+			#include "MyLighting.cginc"
+            #include "UnityCG.cginc"
 
             #include "MyDistortion.cginc"
 
@@ -39,20 +44,21 @@ Shader "Unlit/under-water"
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.worldPosition = mul(unity_ObjectToWorld, v.vertex);
                 o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
+                o.viewDir = WorldSpaceViewDir(v.vertex);
+                o.normal = UnityObjectToWorldNormal(v.normal);
 
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
-                float4 col = float4(1.0, 0.0, 0.0, 1.0);//tex2D(_MainTex, i.uv * 5.0);
+                fixed4 col = getLighting(normalize(i.normal), normalize(i.viewDir));
 
-                float fade = pow((_WaterLevel - i.worldPosition.y), 0.5)/2.0;
-                float4 c = col;
+                float fade = pow(((_WaterLevel - i.worldPosition.y)) + 0.5, 2.0)/3;
 
                 // pu the fade strength onto the alpha channel
-                c.a = (1.0 - fade);
-                return c;
+                col.a = (1.0 - fade);
+                return col;
             }
 
             ENDCG
